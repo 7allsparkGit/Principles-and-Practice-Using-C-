@@ -1,7 +1,9 @@
 #include "std_lib_facilities.h" 
 
 // simple program to exercise operators
-
+//##########################################################################################
+//##																					###
+//##########################################################################################
 int square(int sqr) {
 	int square = 0;
 	for (int i = 0; i <sqr; i++)
@@ -10,7 +12,9 @@ int square(int sqr) {
 	}
 	return square;
 }
-
+//##########################################################################################
+//##																					###
+//##########################################################################################
 void charS() {
 	char character = ' ';
 	for (int i = 0; i < 23; i++) {
@@ -27,14 +31,16 @@ void charS() {
 
 	cout << "Square root is " << square(7) << endl;
 }
-
+//##########################################################################################
+//##																					###
+//##########################################################################################
 bool TerminatingWithPipeWhileLoop()
 {
 	string one = " ", two = " ";
 
 	cout << "First: ";
 	cin >> one;
-
+	
 	if (one != "|") {
 		cout << "Second: ";
 		cin >> two;
@@ -68,7 +74,9 @@ bool TerminatingWithPipeWhileLoop()
 	}
 	else return false;
 }
-
+//##########################################################################################
+//##																					###
+//##########################################################################################
 void TerminatingWithPipeWhileLoopSecond()
 {
 	double val1;
@@ -86,8 +94,8 @@ void TerminatingWithPipeWhileLoopSecond()
 		cin >> val2;
 		//cout << val1 << '\t' << val2;
 		cout << endl;
-
-
+		
+		
 		if (val1 > val2) {
 			cout << "Smaller value is:  " << val2 << "\n";
 			cout << "The greater value is:  " << val1 << "\n";
@@ -101,10 +109,10 @@ void TerminatingWithPipeWhileLoopSecond()
 			bigger = val2;
 		}
 		else if (val1 = val2) {
-			cout << "The numbers are equal\n";
+			cout << "The numbers are equal\n";		
 		}
-		cout << "The difference between the two number is: "
-			<< bigger - smaller << "\n";
+		cout << "The difference between the two number is: " 
+			<< bigger - smaller <<"\n";
 
 
 		cout << "Enter | if you want to quit: ";
@@ -112,7 +120,9 @@ void TerminatingWithPipeWhileLoopSecond()
 	}
 }
 
-
+//##########################################################################################
+//##																					###
+//##########################################################################################
 void SmallestBiggestSoFar()
 {
 	double num;
@@ -129,7 +139,7 @@ void SmallestBiggestSoFar()
 	{
 		cout << "Enter a number: \n";
 		cin >> num;
-
+		
 		if (num > bigger) {
 			bigger = num;
 			cout << "the highest so far\n";
@@ -142,34 +152,100 @@ void SmallestBiggestSoFar()
 		cin >> n;
 	}
 }
-
+//##########################################################################################
+//##																					###
+//##########################################################################################
 void ValueUnits()
 {
+	// can NOT use with switch, can not figure out the logic
+	enum Choice
+	{
+		Y = 0,
+		YARD = 1,
+		METER = 2,
+		KM = 3,
+		GALLONS = 4
+	};
+
+	bool firstLoop = false;
 	double num;
 	double smaller, bigger;
-	int numberOfValus = 0;
+	double numberOfValus = 0, sumOfValues = 0;
+	bool bErrorIncorrectInput = false;
+	vector<string> NotAllowedMesaurments{ "y", "yard", "meter", "km", "gallons" };
 	string unit = "";
 	char n;
-	cout << "Enter | if you want to quit: ";
+	vector<double> AllEnteredValue{};
+	
+	cout << "Enter | if you want to quit now or ANYTHING to continue: ";
 	cin >> n;
-	cout << "Enter a number follow by a unit like this 3.33m \n"
-		<< "only use cm, in, ft, m: ";
-	cin >> num >> unit;
-	smaller = num;
-	bigger = num;
-
+	
 	while (n != '|')
-	{	// TODO reject inputs such as: y, yard, meter, km, gallons by explicitly printing out
-		// and reject every other non relevant input
-		// TODO check string[0] if it is "_" then string[0] = string[1]
-		// TODO case for cm, in, ft, m:
-		// TODO keep track the sum of entered values  in meters
-		// TODO keep track smallest largest
-		// TODO keep all values enterd in vector, at the end write out those, 
-		// before writing out sort them
-		cout << "Enter a number: \n";
-		cin >> num;
-
+	{	
+		cout << "Enter a number follow by a unit like this 3.33m \n"
+			<< "only use cm, in, ft, m: ";
+		cin >> num >> unit;
+		/// Loop until input measure type become true
+		while (!bErrorIncorrectInput) 
+		{
+			// initialize firsloop for the first while run
+			if (!firstLoop) {
+				smaller = num;
+				bigger = num;
+			}
+			/// Checking incorrect input for measure type
+			if (unit.compare("cm") == 0 || unit.compare("m") == 0 ||
+				unit.compare("in") == 0 || unit.compare("tf") == 0 ||
+				unit.compare(" cm") == 0 || unit.compare(" m") == 0 ||
+				unit.compare(" in") == 0 || unit.compare(" tf") == 0) {
+					bErrorIncorrectInput = true;
+					cout << "OOOOOKKKK\n ";
+			}
+			else {
+				if (unit == "") {
+					cout << "The measure can not be empty, choose again a NEW unit:\n ";
+				}
+				else if (unit == "y") {
+					cout << "The " << unit << " is ILLEGAL!\n";
+					cout << "Choose again NEW unit: ";
+				}
+				else if (unit == "yard") {
+					cout << "The " << unit << " is ILLEGAL!\n";
+					cout << "Choose again NEW unit: ";
+				}
+				else if (unit == "meter") {
+					cout << "The " << unit << " is ILLEGAL!\n";
+					cout << "Choose again NEW unit: ";
+				}
+				else if (unit == "km") {
+					cout << "The " << unit << " is ILLEGAL!\n";
+					cout << "Choose again NEW unit: ";
+				}
+				else if (unit == "gallons") {
+					cout << "The " << unit << " is ILLEGAL!\n";
+					cout << "Choose again NEW unit: ";
+				}
+				else {
+					cout << "The " << unit << " is ILLEGAL!\n";
+					cout << "Choose again NEW unit: ";
+				}
+				cin >> unit;
+			}
+		}
+		/// convert units to meter
+		if (unit == "cm") {
+			num /= 100;
+		}
+		else if (unit == "in") {
+			num *= 2.45;
+			num /= 100;
+		}
+		else if (unit == "ft") {
+			num *= 12;
+			num *= 2.54;
+			num /= 100;
+		}
+		/// keep track smallest and largest
 		if (num > bigger) {
 			bigger = num;
 			cout << "the highest so far\n";
@@ -178,13 +254,35 @@ void ValueUnits()
 			smaller = num;
 			cout << "the smallest so far\n";
 		}
-		cout << "Enter | if you want to quit: ";
+
+		cout << "Enter | if you want to quit now or ANYTHING to continue: ";
 		cin >> n;
 
 		numberOfValus++;
+		sumOfValues += num;
+		bErrorIncorrectInput = false;
+		firstLoop = true;
+		AllEnteredValue.push_back(num);		
+	}	
+	/// Print out statistics
+	cout << "Sum: " << sumOfValues << " !\n";
+	cout << "Number of enterd values: " << numberOfValus << " !\n";
+	cout << "Smallest: " << smaller << " !\n";
+	cout << "Largest: " << bigger << " !\n";
+
+	/// sorting the int vector  and then print them out
+	sort(AllEnteredValue.begin(), AllEnteredValue.end());
+	int i = 1;
+	for (double elements : AllEnteredValue){
+		cout << i++ << ". " << elements << "\n";
 	}
 }
 
+
+
+//##########################################################################################
+//##						MAIN.c++													###
+//##########################################################################################
 int main()
 {
 
