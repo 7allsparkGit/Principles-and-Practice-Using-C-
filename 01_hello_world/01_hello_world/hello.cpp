@@ -1,4 +1,6 @@
 #include "std_lib_facilities.h" 
+#include <algorithm>
+#include <vector>
 
 // simple program to exercise operators
 //##########################################################################################
@@ -281,12 +283,96 @@ void ValueUnits()
 
 
 //##########################################################################################
+//##								MEDIAN - Exercise 2.								###
+//##########################################################################################
+double ReturnMedianOfVector()
+{
+	int VectorSize = 0;
+	double Median = 0;
+	vector<double> Vectors = { 5, 7, 9, 4, 6, 8, 7, 6 };
+	VectorSize = Vectors.size();
+
+	/// Check if vector size even or odd number
+	if (VectorSize % 2 != 0)
+	{
+		Median = Vectors[(VectorSize-1) / 2];
+		//cout << Median;
+	}
+	else if(VectorSize % 2 == 0)
+	{
+		cout << (Vectors[((VectorSize / 2))]) / 2 << std::endl;
+		cout << Vectors[((VectorSize / 2) - 1)] << std::endl;
+
+		Median = ((Vectors[(VectorSize / 2) - 1] + Vectors[VectorSize / 2])) / 2;
+	}
+	return Median;
+}
+
+//##########################################################################################
+//##						TOTAL DISTANCE - Exercise 3.								###
+//##########################################################################################
+void CityDistanceCalculator()
+{
+	constexpr int MAX_VECTOR_SIZE = 20;
+	bool bIsMoreUserInput = true;
+	int LoopCounter = 0;
+	double VectorInputValues = 0;
+	char PLayerDecisionQuitOrNot = ' ';
+	double TotalDistance = 0;
+	double SmallestDistance = 0;
+	double GreatestDistance = 0;
+	double MeanDistance = 0;
+
+	int VectorSize = 0;
+	double Median = 0;
+	vector<double> VectorsDistance = {};
+	VectorSize = VectorsDistance.size();
+
+	/// Populate vector until its max or true
+	
+	while (bIsMoreUserInput && (LoopCounter != MAX_VECTOR_SIZE-1))
+	{
+		/// Populate vector with distances
+		std::cout << "Enter a distance: ";
+		std::cin >> VectorInputValues;
+		TotalDistance += VectorInputValues;
+		VectorsDistance.push_back(VectorInputValues);
+		
+		std::cout << "To quit hit: \"q\" or anything else to play more: ";
+		std::cin >> PLayerDecisionQuitOrNot;
+		std::cout << std::endl;
+		if (PLayerDecisionQuitOrNot == 'q' )
+		{
+			bIsMoreUserInput = false;
+		}
+		LoopCounter++;
+	}
+
+	/// Find smallest - greates distance - mean distance - sum of distances
+	  auto MinDistance = std::min_element(std::begin(VectorsDistance), std::end(VectorsDistance));
+	  std::cout << "Smallest distance: "<< *MinDistance << '\n';
+
+	  auto MaxDistance = std::max_element(std::begin(VectorsDistance), std::end(VectorsDistance));
+	  std::cout << "Greatest distance: " << *MaxDistance << '\n';
+
+	  MeanDistance = TotalDistance / LoopCounter;
+	  std::cout << "Mean distance: " << MeanDistance << '\n';
+	  
+	  std::cout << "Sum of distances: " << TotalDistance << '\n';
+
+}
+
+//##########################################################################################
+//##						NUMBER GUESSING GAME - Exercise 4.							###
+//##########################################################################################
+
+//##########################################################################################
 //##						MAIN.c++													###
 //##########################################################################################
 int main()
 {
 
-	ValueUnits();
+	CityDistanceCalculator();
 
 
 	return 0;
