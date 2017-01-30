@@ -279,9 +279,6 @@ void ValueUnits()
 		cout << i++ << ". " << elements << "\n";
 	}
 }
-
-
-
 //##########################################################################################
 //##								MEDIAN - Exercise 2.								###
 //##########################################################################################
@@ -307,7 +304,6 @@ double ReturnMedianOfVector()
 	}
 	return Median;
 }
-
 //##########################################################################################
 //##						TOTAL DISTANCE - Exercise 3.								###
 //##########################################################################################
@@ -359,12 +355,117 @@ void CityDistanceCalculator()
 	  std::cout << "Mean distance: " << MeanDistance << '\n';
 	  
 	  std::cout << "Sum of distances: " << TotalDistance << '\n';
-
 }
-
 //##########################################################################################
 //##						NUMBER GUESSING GAME - Exercise 4.							###
 //##########################################################################################
+void NumberGuessingGame()
+{
+	constexpr int NUMBER_TO_GUESS = 61; // const int NUMBER_TO_GUESS = 99; - we can initialise with const
+	int AddOrSubstractPerTwo = 50;
+	int UnGuessedNumber = 50;
+	//int SuccessfullyGuessedNumber = -1;
+	int LoopCounterStepps = 0;
+	char GuessYesOrNow = ' ';
+
+	do
+	{
+		LoopCounterStepps++;
+		AddOrSubstractPerTwo /= 2;
+		std::cout << LoopCounterStepps << ". Is the number bigger then " << UnGuessedNumber  << ". Choose yes: y, no: n! : " ;
+		std::cin >> GuessYesOrNow;
+		if (GuessYesOrNow == 'y')
+		{
+			UnGuessedNumber += AddOrSubstractPerTwo + 1;
+		}
+		else
+		{
+			UnGuessedNumber -= AddOrSubstractPerTwo + 1;
+		}
+		//SuccessfullyGuessedNumber = UnGuessedNumber + 1;
+	} while (UnGuessedNumber != NUMBER_TO_GUESS);
+
+	std::cout << "The guessed number is: " << UnGuessedNumber << std::endl;
+}
+//##########################################################################################
+//##						SIMPLE CALCULATOR - Exercise 5.								###
+//##########################################################################################
+void SimpleCalculator()
+{
+	char PlayMoreOrQuit = ' ';
+	char Expression = ' ';
+	double ValueOne = 0;
+	double ValueTwo = 0;
+	double ExpressionResult = 0;
+	bool bInvalidExpression = false;
+
+	std::cout << "------------------------    CALCULATOR     --------------------------" << std::endl;
+	std::cout << "Supports +,-,/,* - add, substract, div, multi" << std::endl;
+	std::cout << "Use only chars above and numbers 0-9, or floating numbers (e.g.: 1.3)" << std::endl;
+	std::cout << "Enter first two value then one of +,-,/,*" << std::endl;
+	std::cout << "---------------------------------------------------------------------" << std::endl;
+	do
+	{
+		std::cout << "\nEnter first value: ";
+		std::cin >> ValueOne;
+		std::cout << "Enter second value: ";
+		std::cin >> ValueTwo;
+		std::cout << "Enter on of +,-,/,* expression: ";
+		cin >> Expression;
+
+		/// checking invalid input - there are maybe better solutins 
+		/// bInvalidExpression initialized false
+		if (Expression == '+' || Expression == '-' || Expression == '*' || Expression == '/')
+		{
+			bInvalidExpression = true;
+		}
+		else { bInvalidExpression = false; }
+		while (!bInvalidExpression) 
+		{
+			std::cout << "\nInvalid input please try again!";
+			std::cout << " Enter on of +,-,/,* expression: ";
+			cin >> Expression;	
+			if (Expression == '+' || Expression == '-' || Expression == '*' || Expression == '/')
+			{
+				bInvalidExpression = true;
+			}		
+		}
+		/// checking invalid input - END
+		
+		/// we should using switch - but switch only accepts enum or int - can not figure it out now
+		/// it may works with char type for +  -  * /
+		if (Expression == '+')
+		{
+			ExpressionResult = ValueOne + ValueTwo;
+			std::cout << ValueOne << " + " << ValueTwo << " = " << ExpressionResult << "\n ";
+		}
+		else if (Expression == '-')
+		{
+			ExpressionResult = ValueOne - ValueTwo;
+			std::cout << ValueOne << " - " << ValueTwo << " = " << ExpressionResult << "\n ";
+		}
+		else if (Expression == '*')
+		{
+			ExpressionResult = ValueOne * ValueTwo;
+			std::cout << ValueOne << " * " << ValueTwo << " = " << ExpressionResult << "\n ";
+		}
+		else if (Expression == '/')
+		{
+			if (ValueTwo == 0 || ValueTwo == 0.0) 
+			{
+				std::cout << "can not divide with ZERO! ";
+			}
+			else 
+			{
+				ExpressionResult = ValueOne / ValueTwo;
+				std::cout << ValueOne << " / " << ValueTwo << " = " << ExpressionResult << "\n ";
+			}
+		}
+
+		std::cout << "\nTo quit hit: \"q\" or anything else to play more: ";
+		std::cin >> PlayMoreOrQuit;
+	} while (PlayMoreOrQuit != 'q');
+}
 
 //##########################################################################################
 //##						MAIN.c++													###
@@ -372,8 +473,7 @@ void CityDistanceCalculator()
 int main()
 {
 
-	CityDistanceCalculator();
-
+	SimpleCalculator();
 
 	return 0;
 }
