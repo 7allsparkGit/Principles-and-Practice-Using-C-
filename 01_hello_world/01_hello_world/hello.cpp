@@ -1,6 +1,8 @@
 #include "std_lib_facilities.h" 
 #include <algorithm>
 #include <vector>
+#include <sstream>
+#include <string>
 
 // simple program to exercise operators
 //##########################################################################################
@@ -466,6 +468,233 @@ void SimpleCalculator()
 		std::cin >> PlayMoreOrQuit;
 	} while (PlayMoreOrQuit != 'q');
 }
+//##########################################################################################
+//##			String to Int, vica-versa Converter - Exercise 6.						###
+//##########################################################################################
+void NumbersToString()
+{
+	char PlayMoreOrQuit = ' ';
+	vector<string> NumbersToString{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+	int VectorIndex = 0;
+	int StringIntFindHelpre = 0;
+	string StringNumber = "";
+
+	///sort(NumbersToString.begin(), NumbersToString.end());   /// Do not sort it as it breaks the positions of elements of vector
+	do
+	{
+		std::cout << "\nEnter number from 0 - 9: ";
+		std::cin >> VectorIndex;
+		std::cout << "\nEnter nubmer in string format from \"zero\" to \"nine\": ";
+		std::cin >> StringNumber;
+		
+		for (string Numbers : NumbersToString)
+		{
+			if(Numbers == StringNumber)
+			{ 
+				std::cout << "\nStringNumber in's numberic value is " << StringIntFindHelpre << std::endl;
+			}
+			StringIntFindHelpre++;
+		}
+
+		
+		cout << "Your input " << VectorIndex << " corresponds to " << NumbersToString[VectorIndex] << std::endl;
+
+		/// checking invalid input - there are maybe better solutins 
+		/// bInvalidExpression initialized false
+		
+
+		std::cout << "\nTo quit hit: \"q\" or anything else to play more: ";
+		std::cin >> PlayMoreOrQuit;
+
+		StringIntFindHelpre = 0;
+	} while (PlayMoreOrQuit != 'q');
+}
+
+//##########################################################################################
+//##						SIMPLE CALCULATOR MODIFIED - Exercise 7					###
+//##########################################################################################
+/// WARNING - many code duplicates, we should use methods/function to clear redundancy out
+/// but it is out of this exercise scope.
+
+void SimpleCalculatorModified()
+{
+	vector<string> NumbersToString{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
+	int VectorIndex = 0;
+	int StringIntFindHelper = 0;
+	string StringNumber = "";
+	string StringStreamInputOne = "";
+	string StringStreamInputTwo = "";
+	string StringQuit = "";
+	bool bIsInputAString = false;
+
+	char PlayMoreOrQuit = ' ';
+	char Expression = ' ';
+	double ValueOne = 0;
+	double ValueTwo = 0;
+	double ExpressionResult = 0;
+	bool bInvalidExpression = false;
+	bool bIsNumberOneDigit = false;
+
+	std::cout << "------------------------    CALCULATOR     --------------------------"	<< std::endl;
+	std::cout << "Supports +,-,/,* - add, substract, div, multi"							<< std::endl;
+	std::cout << "Use only chars above and numbers 0-9, or floating numbers (e.g.: 1.3)"	<< std::endl;
+	std::cout << "Use can use string equivalent for numbers 0-9, like zero, one, two etc."	<< std::endl;
+	std::cout << "Enter first two value then one of +,-,/,*"								<< std::endl;
+	std::cout << "---------------------------------------------------------------------"	<< std::endl;
+	do
+	{
+		//cin.clear();
+
+		/// This cin.ignore clears, flushes the console stdinput, this is the only solution the works for now
+		/// Because of this we must hit enter before the program starts
+		/// There is a cin.fail()  method for cin, but do not know how to implement it. 
+		/// Besides the first enter glitch the program works well.
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');  // This is a MUST HAVE implementation
+		
+				
+		ValueOne = 0;
+		ValueTwo = 0;
+		/*StringStreamInputOne = "";
+		StringStreamInputTwo = "";*/
+		bInvalidExpression = false;
+		bIsNumberOneDigit = false;
+		bIsInputAString = false;
+		StringIntFindHelper = 0;
+
+		/*StringStreamInputOne.clear();
+		StringStreamInputTwo.clear();
+		StringQuit.clear();*/
+
+		std::cout << "\nEnter first value, either use integer 0 - 9 digits, or string zero - nine: ";
+		std::getline(cin, StringStreamInputOne); //std::cin >> ValueOne;
+		std::cout << "Enter second value either use integer 0 - 9 digits, or string zero - nine: ";
+		std::getline(cin, StringStreamInputTwo); //std::cin >> ValueTwo;
+
+		/// Convert string number input to integer - did not checked input string validity.
+		/// Takes to much time and no need for solving this exercise. 
+		for (string Numbers : NumbersToString)
+		{
+			if (Numbers == StringStreamInputOne)
+			{
+				ValueOne = StringIntFindHelper;
+				bIsInputAString = true;
+			}
+			if (Numbers == StringStreamInputTwo)
+			{
+				ValueTwo = StringIntFindHelper;
+				bIsInputAString = true;
+			}
+			StringIntFindHelper++;
+		}
+		///  END - Convert string number input to integer 
+
+		/// Checking invalid number input  
+		if (!bIsInputAString)
+		{
+			stringstream(StringStreamInputOne) >> ValueOne;
+			stringstream(StringStreamInputTwo) >> ValueTwo;
+		}
+		if ((ValueOne <= 9 && ValueTwo <= 9) && (ValueOne >= 0 && ValueTwo >= 0))
+		{
+			bIsNumberOneDigit = true;
+		}
+		else { bIsNumberOneDigit = false; }
+
+		while (!bIsNumberOneDigit)
+		{
+			std::cout << "\nEnter only digits from 0  - 9!";
+			std::cout << "Enter first value, either use integer 0 - 9 digits, or string zero - nine: ";
+			std::getline(cin, StringStreamInputOne); //std::cin >> ValueOne;
+			std::cout << "Enter second value either use integer 0 - 9 digits, or string zero - nine: ";
+			std::getline(cin, StringStreamInputTwo); //std::cin >> ValueTwo;
+			
+			for (string Numbers : NumbersToString)
+			{
+				if (Numbers == StringStreamInputOne)
+				{
+					ValueOne = StringIntFindHelper + 1;
+					bIsInputAString = true;
+				}
+				if (Numbers == StringStreamInputTwo)
+				{
+					ValueTwo = StringIntFindHelper + 1;
+					bIsInputAString = true;
+				}
+				StringIntFindHelper++;
+			}
+
+			if (!bIsInputAString)
+			{
+				stringstream(StringStreamInputOne) >> ValueOne;
+				stringstream(StringStreamInputTwo) >> ValueTwo;
+			}
+			if ((ValueOne <= 9 && ValueTwo <= 9) && (ValueOne >= 0 && ValueTwo >= 0))
+			{
+				bIsNumberOneDigit = true;
+			}
+		}
+		 ///checking invalid number input  - END
+
+		std::cout << "\nEnter on of +,-,/,* expression: ";
+		std::cin >> Expression;
+		//Expression = '+';
+
+		/// checking invalid input - there are maybe better solutins 
+		/// bInvalidExpression initialized false
+		if (Expression == '+' || Expression == '-' || Expression == '*' || Expression == '/')
+		{
+			bInvalidExpression = true;
+		}
+		else { bInvalidExpression = false; }
+		while (!bInvalidExpression)
+		{
+			std::cout << "\nInvalid input please try again!";
+			std::cout << "Enter on of +,-,/,* expression: ";
+			cin >> Expression;
+			if (Expression == '+' || Expression == '-' || Expression == '*' || Expression == '/')
+			{
+				bInvalidExpression = true;
+			}
+		}
+		/// checking invalid input - END
+
+		/// we should using switch - but switch only accepts enum or int - can not figure it out now
+		/// it may works with char type for +  -  * /
+		if (Expression == '+')
+		{
+			ExpressionResult = ValueOne + ValueTwo;
+			std::cout << ValueOne << " + " << ValueTwo << " = " << ExpressionResult << "\n ";
+		}
+		else if (Expression == '-')
+		{
+			ExpressionResult = ValueOne - ValueTwo;
+			std::cout << ValueOne << " - " << ValueTwo << " = " << ExpressionResult << "\n ";
+		}
+		else if (Expression == '*')
+		{
+			ExpressionResult = ValueOne * ValueTwo;
+			std::cout << ValueOne << " * " << ValueTwo << " = " << ExpressionResult << "\n ";
+		}
+		else if (Expression == '/')
+		{
+			if (ValueTwo == 0 || ValueTwo == 0.0)
+			{
+				std::cout << "can not divide with ZERO! ";
+			}
+			else
+			{
+				ExpressionResult = ValueOne / ValueTwo;
+				std::cout << ValueOne << " / " << ValueTwo << " = " << ExpressionResult << "\n ";
+			}
+		}
+
+		std::cout << "\nTo quit hit: \"q\" or anything else to play more: ";
+		std::cin >> PlayMoreOrQuit;
+		//PlayMoreOrQuit = 'q';
+	} while (PlayMoreOrQuit != 'q');
+}
+
 
 //##########################################################################################
 //##						MAIN.c++													###
@@ -473,7 +702,7 @@ void SimpleCalculator()
 int main()
 {
 
-	SimpleCalculator();
+	SimpleCalculatorModified();
 
 	return 0;
 }
