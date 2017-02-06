@@ -695,14 +695,163 @@ void SimpleCalculatorModified()
 	} while (PlayMoreOrQuit != 'q');
 }
 
+//##########################################################################################
+//##						 GAME OF CHESS - Exercise 8, 9							###
+//##########################################################################################
+void GameOfChess()
+{
+	int SquareWeAreAt = 1;
+	//int NumberOfGrainsForCurrentSquare = 1;
+	double NumberOfGrainsForCurrentSquare = 1;
+	int TrackAllGrains = 0;
+	bool bIsTrackAllGrainsPassedAThousand = false;
+	bool bIsTrackAllGrainsPassedMillion = false;
+	bool bIsTrackAllGrainsPassedBillion = false;
+
+	while (SquareWeAreAt <= 1100)
+	{
+		std::cout << "Number of NumberOfGrainsForCurrentSquare: " << NumberOfGrainsForCurrentSquare << std::endl;
+		NumberOfGrainsForCurrentSquare =  pow(2, SquareWeAreAt);
+		//std::cout << "\nNumber of TrackAllGrains: " << TrackAllGrains << std::endl;
+		TrackAllGrains += NumberOfGrainsForCurrentSquare;
+		//std::cout << "\nNumber of SquareWeAreAt: " << SquareWeAreAt << std::endl;
+		
+		if (TrackAllGrains >= 1000 && !bIsTrackAllGrainsPassedAThousand)
+		{
+			std::cout << "Number of squares " << SquareWeAreAt << " Number of grains: " << TrackAllGrains << std::endl;
+			bIsTrackAllGrainsPassedAThousand = true;
+		}
+		if (TrackAllGrains >= 1000000 && !bIsTrackAllGrainsPassedMillion)
+		{
+			std::cout << "Number of squares " << SquareWeAreAt << " Number of grains: " << TrackAllGrains << std::endl;
+			bIsTrackAllGrainsPassedMillion = true;
+		}
+		if (TrackAllGrains >= 1000000000 && !bIsTrackAllGrainsPassedBillion)
+		{
+			std::cout << "Number of squares " << SquareWeAreAt << " Number of grains: " << TrackAllGrains << std::endl;
+			bIsTrackAllGrainsPassedBillion = true;
+		}
+		SquareWeAreAt++;
+	}	
+}
 
 //##########################################################################################
-//##						MAIN.c++													###
+//##						ROCK, PAPER, SCISSORs - Exercise 10						###
+//##########################################################################################
+void RockPaperScissors()
+{
+	///  use switch to solve 
+	///  machine should give random answer
+	/// build integer vector with 0,1,2 value reffered to rock, paper, or scissors
+	/// 1 = rock, 2 = paper, 3 = scissor
+
+	vector<int> EnemyBets = { 1, 2, 1, 3, 2, 1, 2, 3, 2, 2, 3, 1, 2, 3, 3, 3, 1, 2, 1, 2,
+								3, 3, 2, 1, 2, 3, 3, 1, 2, 2, 2, 1, 1, 1, 1, 2, 3, 3, 2 };
+	int YourBet = 0;
+
+	for (int Bet : EnemyBets)
+	{
+		std::cout << "\nYour bet, choose 1 = rock, 2 = paper, 3 = scissor: " << std::endl;
+		std::cin >> YourBet;
+		switch (YourBet)
+		{
+		case 1:
+			if (Bet == 1)
+			{
+				std::cout << "Noone won!" << std::endl;
+			}
+			else if (Bet == 2)
+			{
+				std::cout << "You lost!" << std::endl;		
+			}
+			else if (Bet == 3)
+			{
+				std::cout << "You won!" << std::endl;
+
+			}
+			break;
+		case 2:
+			if (Bet == 2)
+			{
+				std::cout << "Noone won!" << std::endl;
+			}
+			else if (Bet == 1)
+			{
+				std::cout << "You won!" << std::endl;
+			}
+			else if (Bet == 3)
+			{
+				std::cout << "You lost!" << std::endl;
+			}
+			break;
+		case 3:
+			if (Bet == 3)
+			{
+				std::cout << "Noone won!" << std::endl;
+			}
+			else if (Bet == 1)
+			{
+				std::cout << "You lost!" << std::endl;
+			}
+			else if (Bet == 2)
+			{
+				std::cout << "You won!" << std::endl;
+			}
+			break;
+		default:
+			std::cout << "Invalid bet!" << std::endl;
+		}
+	}
+}
+//##########################################################################################
+//##						FIND PRIME NUMBERS - Exercise 11						###
+//##########################################################################################
+void FindPrimeNumbers()
+{
+	/// find primes between 1 to 100
+	/// can be devided by prime number smaler then itself
+	vector<int> PrimeNumbers;
+	bool bIsPrime = true;
+	int MAX_TRY_PRIME_NUMBER = 0;
+
+	std::cout << "Enter max number for loop to find prime: " << std::endl;
+	std::cin >> MAX_TRY_PRIME_NUMBER;
+	
+	for (int PrimeLoop = 1; PrimeLoop <= MAX_TRY_PRIME_NUMBER; PrimeLoop++)
+	{
+		bIsPrime = true;
+		if (PrimeLoop == 1)
+		{
+			bIsPrime = false;
+		}
+		for (int Prime : PrimeNumbers)
+		{
+			//std::cout << "Prime: " << Prime << std::endl;
+			if ((PrimeLoop % Prime) == 0)
+			{
+				bIsPrime = false;
+			}		
+		}
+		if (bIsPrime)
+		{
+			PrimeNumbers.push_back(PrimeLoop);
+		}
+	}
+
+	for (int Prime : PrimeNumbers)
+	{
+		std::cout << "Prime: " << Prime << std::endl;
+	}
+
+}
+
+//##########################################################################################
+//##						MAIN													###
 //##########################################################################################
 int main()
 {
 
-	SimpleCalculatorModified();
+	FindPrimeNumbers();
 
 	return 0;
 }
