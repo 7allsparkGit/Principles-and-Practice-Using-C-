@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <stdlib.h> 
 
 // simple program to exercise operators
 //##########################################################################################
@@ -515,7 +516,6 @@ void NumbersToString()
 //##########################################################################################
 /// WARNING - many code duplicates, we should use methods/function to clear redundancy out
 /// but it is out of this exercise scope.
-
 void SimpleCalculatorModified()
 {
 	vector<string> NumbersToString{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten" };
@@ -846,12 +846,113 @@ void FindPrimeNumbers()
 }
 
 //##########################################################################################
+//##						FIND PRIME NUMBERS 2 - Exercise 12	- 13					###
+//##########################################################################################
+void FindPrimeNumbersSecondEdition()
+{
+	/// vector<bool> primenumbers; // can not convert to bool ERROR
+	int max_try_prime_number = 100; 
+	bool *isComposite = new bool[max_try_prime_number + 1 ];
+	memset(isComposite, false, sizeof(bool) * (max_try_prime_number + 1));
+
+	bool bisprime = true;
+
+	int upperBoundSquareRoot = (int)sqrt((double)max_try_prime_number);
+	
+	/// Commented out because of vector<bool> error
+	/*for (int primeloop = 1; primeloop <= max_try_prime_number; primeloop++)
+	{
+		bisprime = true;
+		primenumbers.push_back(false);	
+	}*/
+
+	for (int m = 1; m <= max_try_prime_number; m++)
+	{
+		if (m == 1)
+		{
+			isComposite[m] = true;
+		}
+		if (!isComposite[m])
+		{
+			for (int k = m * m; k <= max_try_prime_number; k += m)
+			{
+				isComposite[k] = true;
+			}
+		}
+	}
+	for (int x = 1; x <= max_try_prime_number; x++)
+	{
+		if (!isComposite[x])
+			cout << x << " ";
+	}
+	
+
+}
+
+//##########################################################################################
+//#							FIND MODE 2 - Exercise 14								###
+//##########################################################################################
+void FindMode()
+{
+	vector<int> RandomNumbersVector;
+	//int RandomNumbersVector[] = { 1, 2, 3, 4 ,4, 4, 5,5, 5,5  };
+	int ModeMostItem = 0;
+	int ModeItem = 0;
+	int VectorSize = 20;
+	int CounterMode = 0;
+	int LastElementOfArray = 0;
+
+	for (int Counter = 0; Counter < VectorSize; Counter++)
+	{
+		RandomNumbersVector.push_back(rand() % 10 + 1);
+	}
+	sort(RandomNumbersVector.begin(), RandomNumbersVector.end());
+	
+	
+	for (unsigned n = 1; n < 10; n++)
+	{
+		if (RandomNumbersVector[n] == RandomNumbersVector[n - 1])
+		{
+			CounterMode++;
+			std::cout << "\nCounterMode " << CounterMode << std::endl;
+		}
+		else
+		{
+			if (ModeMostItem < CounterMode)
+			{
+				ModeMostItem = CounterMode;
+				ModeItem = RandomNumbersVector[n-1];
+			}
+			CounterMode = 0;
+		}
+		LastElementOfArray = n;
+	}
+	/*/// checking last element
+	if (RandomNumbersVector[LastElementOfArray - 1] == RandomNumbersVector[LastElementOfArray])
+	{
+
+	}*/
+	
+	std::cout << "\nMode " << ModeItem << std::endl;
+	
+	for (int Nums : RandomNumbersVector)
+	{
+		std::cout << " " << Nums;
+	}
+	std::cout << std::endl;
+}
+
+
+
+
+
+//##########################################################################################
 //##						MAIN													###
 //##########################################################################################
 int main()
 {
 
-	FindPrimeNumbers();
+	FindMode();
 
 	return 0;
 }
