@@ -1,9 +1,6 @@
 #include "std_lib_facilities.h" 
-#include <algorithm>
-#include <vector>
-#include <sstream>
-#include <string>
-#include <stdlib.h> 
+//#include <stdlib.h> 
+
 
 // simple program to exercise operators
 //##########################################################################################
@@ -846,7 +843,7 @@ void FindPrimeNumbers()
 }
 
 //##########################################################################################
-//##						FIND PRIME NUMBERS 2 - Exercise 12	- 13					###
+//##						FIND PRIME NUMBERS 2 - Exercise 12	- 14					###
 //##########################################################################################
 void FindPrimeNumbersSecondEdition()
 {
@@ -890,7 +887,7 @@ void FindPrimeNumbersSecondEdition()
 }
 
 //##########################################################################################
-//#							FIND MODE 2 - Exercise 14								###
+//#							FIND MODE 2 - Exercise 16								###
 //##########################################################################################
 void FindMode()
 {
@@ -908,7 +905,7 @@ void FindMode()
 	}
 	sort(RandomNumbersVector.begin(), RandomNumbersVector.end());
 	
-	
+	/// Find mode - the array is sorted, there maybe less resource expansive algorythm
 	for (unsigned n = 1; n < 10; n++)
 	{
 		if (RandomNumbersVector[n] == RandomNumbersVector[n - 1])
@@ -942,6 +939,131 @@ void FindMode()
 	std::cout << std::endl;
 }
 
+//##########################################################################################
+//#				FIND MIN,MAX,MODE of strings 2 - Exercise 17							###
+//##########################################################################################
+//  TODO !!!!!  This whole program may could be made with pointers for the more efficiency
+	// MaxLocal and MinLocal could be replaced with pointer and even maybe the 
+	// MinMaxString.MinElement,  MinMaxString.MaxElement variables. 
+	// using variable assignments all the time seems havey resource lake. Maybe some day I gonna try to do it with pointers 
+		
+void FindMinMaxModeOfAString()
+{
+	struct MinMaxString
+	{
+		string MinElement;
+		string MaxElement;
+	};
+	
+	string StringVectorInitz[] = { "proba", "makkos", "kerika",  "cicamica", "kerika", "kerika", "zizotop" };
+	int EndOfStringArray = 0; // size of the string
+	int StartOfStringArray = 0;
+	int SizeOfStringArray = 0;
+	int ArrayIndex = 0;
+	string MaxLocal = " ";
+	string MinLocal = " ";
+	int CounterMode = 0;
+	int ModeMostItem = 0;
+	string ModeStringItem = ""; 
+	int LastElementOfArray = 0;
+	/// MIN MAX elemetn of array: sorting is expansive in terms of processor and memory copy, and maybe calc times
+	/// but it may required once for an array to be sorted
+	/// then a new element can be placed to the right place of the array. 
+	SizeOfStringArray = sizeof(StringVectorInitz) / sizeof(StringVectorInitz[0]);
+	EndOfStringArray = SizeOfStringArray - 1;
+
+	std::cout << "\nZ: " << EndOfStringArray << std::endl;
+	std::cout << "\nFirst element of the array: " << StringVectorInitz[0] << "\nlast element of the array: " << StringVectorInitz[size(StringVectorInitz) - 1] << std::endl;
+
+	//std::cout << "\nFirst element of the array: " << (StringVectorInitz[2] > StringVectorInitz[3]) << std::endl;
+
+	/// MIN MAX element of array: another way to find is an algorythm that finds min, max in 3n/2 number of comparisons.
+	/// the algorythm processes the elements in pairs 
+	
+	// check values := std::cout << "\nFirst element of the array: " << SizeOfStringArray << std::endl;
+	/// checking whether the array size is even or odd - we assume the start element is of array index [0]
+	SizeOfStringArray = EndOfStringArray - StartOfStringArray + 1;
+	EndOfStringArray = SizeOfStringArray - 1;
+
+	MinMaxString MinMaxString;
+
+	if (SizeOfStringArray % 2 != 0)
+	{
+		MinMaxString.MinElement = StringVectorInitz[StartOfStringArray];
+		MinMaxString.MaxElement = StringVectorInitz[StartOfStringArray];
+
+		ArrayIndex = StartOfStringArray + 1;
+	}
+	else
+	{
+		if (StringVectorInitz[StartOfStringArray] < StringVectorInitz[StartOfStringArray + 1])
+		{
+			MinMaxString.MinElement = StringVectorInitz[StartOfStringArray];
+			MinMaxString.MaxElement = StringVectorInitz[StartOfStringArray + 1];
+		}
+		else
+		{
+			MinMaxString.MinElement = StringVectorInitz[StartOfStringArray + 1];
+			MinMaxString.MaxElement = StringVectorInitz[StartOfStringArray];
+		}
+		ArrayIndex = StartOfStringArray + 2;
+	}
+
+	for (int Index = ArrayIndex; Index < SizeOfStringArray - 1; Index += 2)
+	{
+		if (StringVectorInitz[Index] < StringVectorInitz[Index + 1])
+		{
+			MinLocal = StringVectorInitz[Index];
+			MaxLocal = StringVectorInitz[Index + 1];
+		}
+		else
+		{
+			MinLocal = StringVectorInitz[Index + 1];
+			MaxLocal = StringVectorInitz[Index];
+		}
+		if (MinLocal < MinMaxString.MinElement)
+		{
+			MinMaxString.MinElement = MinLocal;
+		}
+		if (MaxLocal > MinMaxString.MaxElement)
+		{
+			MinMaxString.MaxElement = MaxLocal;
+		}
+	}
+
+	std::cout << "\nMin: " << MinMaxString.MinElement << "\nMax: " << MinMaxString.MaxElement << std::endl;
+	
+	/// Find mode of String Array,
+	/// the array is sorted at this point, there maybe less resource expansive algorythm though
+	
+	//sort(StringVectorInitz[0], StringVectorInitz[SizeOfStringArray]);
+	std::sort(std::begin(StringVectorInitz), std::end(StringVectorInitz));
+	for (unsigned Counter = 1; Counter < SizeOfStringArray; Counter++)
+	{
+		/// checking elements one other 
+		if (StringVectorInitz[Counter] == StringVectorInitz[Counter - 1])
+		{
+			CounterMode++;
+		}
+		else
+		{
+			if (ModeMostItem < CounterMode)
+			{
+				ModeMostItem = CounterMode;
+				ModeStringItem = StringVectorInitz[Counter - 1];
+			}
+			CounterMode = 0;
+		}
+		//LastElementOfArray = Counter;
+	}
+	/*/// checking last element
+	if (RandomNumbersVector[LastElementOfArray - 1] == RandomNumbersVector[LastElementOfArray])
+	{
+
+	}*/
+	std::cout << "\nMode " << ModeStringItem << std::endl;
+
+}
 
 
 
@@ -952,7 +1074,7 @@ void FindMode()
 int main()
 {
 
-	FindMode();
+	FindMinMaxModeOfAString();
 
 	return 0;
 }
