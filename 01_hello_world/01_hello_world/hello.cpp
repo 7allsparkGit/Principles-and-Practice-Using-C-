@@ -1065,6 +1065,173 @@ void FindMinMaxModeOfAString()
 
 }
 
+//##########################################################################################
+//##					Quadratic formula - Exercise 18									###
+//##########################################################################################
+void QuadraticFormula()
+{
+	double a = 0;
+	double b = 0;
+	double c = 0;
+	double XOne = 0;
+	double XTwo= 0;
+	double Determinant = 0;
+	double RealPart = 0;
+	double ImaginaryPart = 0;
+	
+	
+
+	std::cout << "\nEnter a: " << std::endl;
+	std::cin >> a;
+	std::cout << "\nEnter b: " << std::endl;
+	std::cin >> b;
+	std::cout << "\nEnter c: " << std::endl;
+	std::cin >> c;	
+	
+	Determinant = b*b - 4 * a*c;
+	
+	if (Determinant > 0) {
+		XOne = (-b + sqrt(Determinant)) / (2 * a);
+		XTwo = (-b - sqrt(Determinant)) / (2 * a);
+		cout << "Roots are real and different." << endl;
+		cout << "x1 = " << XOne << endl;
+		cout << "x2 = " << XTwo << endl;
+	}
+	else if (Determinant == 0) {
+		cout << "Roots are real and same." << endl;
+		XOne = (-b + sqrt(Determinant)) / (2 * a);
+		cout << "x1 = x2 =" << XOne << endl;
+	}
+	else {
+		RealPart = -b / (2 * a);
+		ImaginaryPart = sqrt(-Determinant) / (2 * a);
+		cout << "Roots are complex and different." << endl;
+		cout << "x1 = " << RealPart << "+" << ImaginaryPart << "i" << endl;
+		cout << "x2 = " << RealPart << "-" << ImaginaryPart << "i" << endl;
+	}
+
+	XOne = (b + sqrt(Determinant)) / (2 * a);
+	XTwo = (b - sqrt(Determinant)) / (2 * a);
+
+	std::cout << "\nOne: " << XOne << "\tTwo: "  << XTwo << std::endl;
+}
+
+//##########################################################################################
+//##					Name-and-value pairs - Exercise 19,20,21.						###
+//##########################################################################################
+void NameAndValuePairs()
+{
+	string Name = "";
+	int Score = 0;
+	int ScoreInt = 0;
+	bool bIsNameScoreUniqueError = true;
+	bool bIsNameFound = false;
+	bool bIsScoreFound = false;
+	vector<string> Names;
+	vector<int> Scores;
+	int NameScoreCounter = 0;
+	int WhileCounter = 0;
+	
+
+	/*std::cout << "\nEnter name: " << std::endl;
+	std::cin >> Name;
+	std::cout << " Enter score: " << std::endl;
+	std::cin >> Score;*/
+
+	/// exercise 19
+	// -------------------------------------------------------------------------------
+	while (Name != "NoName")
+	{
+		//RESET
+		Score = 0;
+		Name = "";
+
+		bIsNameScoreUniqueError = true;
+		std::cout << "\nEnter name: " << std::endl;
+		std::cin >> Name;
+		std::cout << "\nEnter score: " << std::endl;
+		if (Name != "NoName") { std::cin >> Score; }
+
+		if ( ((Name == "") || (Score == 0)) && Name != "NoName")
+		{	
+			bIsNameScoreUniqueError = false;
+			std::cout << "Please provide valid input and try again!";
+			Score = 0;
+			Name = "";
+		}
+		if (Name != "NoName") {
+			for (string NameVector : Names)
+			{
+				if (Name == NameVector)
+				{
+					bIsNameScoreUniqueError = false;
+				}
+			}
+		}
+		if(bIsNameScoreUniqueError && Name != "NoName")
+		{
+			Names.push_back(Name);
+			Scores.push_back(Score);
+		}
+	}
+
+	/// exercise 20
+	// -------------------------------------------------------------------------------
+	std::cout << "\nSeacrh for a name: " << std::endl;
+	std::cin >> Name;
+	while (Name != "NoName")
+	{
+		/// RESET 
+		bIsNameFound = false;
+		WhileCounter = 0;
+		while ((bIsNameFound == false) && (WhileCounter < (Names.size())))
+		{
+			if (Name == Names[WhileCounter])
+			{
+				bIsNameFound = true;
+				Score = WhileCounter;
+			}
+			//else { bIsNameFound = true; }
+			WhileCounter++;
+		}
+		
+		if (bIsNameFound)
+		{
+			std::cout << "\nName: " << Name << " Scores: " << Scores[Score] << std::endl;
+		}
+		else { std::cout << "\nName not found: " << std::endl; }
+
+		std::cout << "\nSeacrh for a name: " << std::endl;
+		std::cin >> Name;
+	}
+
+	/// exercise 21
+	// -------------------------------------------------------------------------------
+	std::cout << "\nSeacrh for a score: " << std::endl;
+	std::cin >> ScoreInt;
+
+	while (ScoreInt != 0)
+	{
+		/// RESET 
+		bIsScoreFound = false;
+		WhileCounter = 0;
+		if (ScoreInt != 0) {
+			while (WhileCounter < Scores.size())
+			{
+				if (Scores[WhileCounter] == ScoreInt)
+				{
+					//bIsScoreFound = true;
+					std::cout << "Name: " << Names[WhileCounter] << " Score: " << ScoreInt << "\t" << std::endl;
+				}
+				//else { std::cout << "\Score not found: " << std::endl; }
+				WhileCounter++;
+			}
+		}
+
+	std::cout << "\nSeacrh for a score: " << std::endl;
+	std::cin >> ScoreInt;
+	}
+}
 
 
 
@@ -1074,7 +1241,7 @@ void FindMinMaxModeOfAString()
 int main()
 {
 
-	FindMinMaxModeOfAString();
+	NameAndValuePairs();
 
 	return 0;
 }
