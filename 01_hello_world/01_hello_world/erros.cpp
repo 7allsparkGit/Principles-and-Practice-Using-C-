@@ -295,18 +295,87 @@ void ProgramFahreinheitToCelsius()
 //##########################################################################################
 //##					 quadratic formula - Exercises 7	 ##
 //##########################################################################################
+class No_Real_Root {};
 void RootsOfQuadraticEquation(double a, double b, double c)
 {
+	double RootsOne = 0;
+	double RootsTwo = 0;
+	double Discriminant = 0;
+	bool bHasMOreThenOneRoots = false;
+
+	try {
+		Discriminant = b * b - 4 * a * c;
+		if (Discriminant < 0) {
+			throw No_Real_Root();
+		}
+		else if (Discriminant > 0)
+		{
+			bHasMOreThenOneRoots = true;
+		}
+	}
+	catch (No_Real_Root) {
+		std::cout << "Sorry no real roots!\n"; // print out temperature
+		error("Too low input");
+	}
+
+	if (!bHasMOreThenOneRoots)
+	{
+		RootsOne = -(b / (2 * a));
+		std::cout << "Root one: " << RootsOne << "\n";
+	}
+	else
+	{
+		RootsOne = (-b + sqrt((b * b) - (4 * a *c))) / (2 * a);
+		RootsTwo = (-b - sqrt((b * b) - (4 * a *c))) / (2 * a);
+
+		std::cout << "Root one: " << RootsOne << "\nRoot two: " << RootsTwo << "\n";
+	}
+}
+
+//##########################################################################################
+//##					 Sum of the first N integers- Exercises 8	 ##
+//##########################################################################################
+class Very_Bad_Input{};
+class Vector_size_bigger_then_expected {};
+class Vector_size_smaller_then_expected {};
+
+void SumOfTheFirstNIntegers()
+{
+	size_t  SizeOfVector = -1;
+	int UserInput = 0;
+	vector<int> VectorIntegers;
+	int VectorSum = 0;
+
+	std::cout << "Please enter the number of values you want to sum: \n";
+	std::cin >> SizeOfVector;
+	std::cout << "Please enter some integers (press '|' to stop):" << std::endl;
+
+	while (cin >> UserInput) VectorIntegers.push_back(UserInput);
+	try
+	{
+		if (VectorIntegers.size() < SizeOfVector) error("Too few numbers; we need ", SizeOfVector);
+		for (size_t  i = 0; i < SizeOfVector; i++) VectorSum += VectorIntegers[i];
+
+		cout << "The sum of the first " << SizeOfVector << " numbers ( ";
+		for (size_t i = 0; i < SizeOfVector; ++i) cout << VectorIntegers[i] << ' ';
+		cout << ") is " << VectorSum << '\n';
+	}
+	catch (runtime_error e)	
+	{
+		std::cout << e.what() << "\n";
+		keep_window_open();
+	}
 
 }
 
-
+/// comment put MAIN main function at the end of this files, to allow this main to function with 
+/// preceding  functions
 //##########################################################################################
 //##						MAIN													###
 //##########################################################################################
 int main()
 {
-	ProgramFahreinheitToCelsius();
+	SumOfTheFirstNIntegers();
 
 	return 0;
 }
