@@ -20,248 +20,249 @@ Happy hunting!
 #include "std_lib_facilities.h"
 
 //------------------------------------------------------------------------------
+//
+//class Token {
+//public:
+//	char kind;        // what kind of token
+//	double value;     // for numbers: a value 
+//	Token(char ch)    // make a Token from a char
+//		:kind(ch), value(0) { }
+//	Token(char ch, double val)     // make a Token from a char and a double
+//		:kind(ch), value(val) { }
+//};
+//
+//
+////------------------------------------------------------------------------------
+//
+//class Token_stream {
+//public:
+//	Token_stream();   // make a Token_stream that reads from cin
+//	Token get();      // get a Token (get() is defined elsewhere)
+//	void putback(Token t);    // put a Token back
+//private:
+//	bool full;        // is there a Token in the buffer?
+//	Token buffer;     // here is where we keep a Token put back using putback()
+//};
+//
+////------------------------------------------------------------------------------
+//
+//// The constructor just sets full to indicate that the buffer is empty:
+//Token_stream::Token_stream()
+//	:full(false), buffer(0)    // no Token in buffer
+//{
+//}
+//
+////------------------------------------------------------------------------------
+//
+//// The putback() member function puts its argument back into the Token_stream's buffer:
+//void Token_stream::putback(Token t)
+//{
+//	if (full) error("putback() into a full buffer");
+//	buffer = t;       // copy t to buffer
+//	full = true;      // buffer is now full
+//}
+//
+////------------------------------------------------------------------------------
+//
+//Token Token_stream::get()
+//{
+//	if (full) {       // do we already have a Token ready?
+//					  // remove token from buffer
+//		full = false;
+//		return buffer;
+//	}
+//
+//	char ch;
+//	cin >> ch;    // note that >> skips whitespace (space, newline, tab, etc.)
+//
+//	switch (ch) {
+//	case '=':    // for "print"
+//	case 'x':    // for "quit"
+//	case '(': case ')': case '+': case '-': case '*': case '/': case '{': case '}': case '!': 
+//		return Token(ch);        // let each character represent itself
+//	case '.':
+//	case '0': case '1': case '2': case '3': case '4':
+//		// case '5': case '6': case '7': case '9': // logic error(1)
+//	case '5': case '6': case '7': case '8': case '9':
+//	{
+//		cin.putback(ch);         // put digit back into the input stream
+//		double val;
+//		cin >> val;              // read a floating-point number
+//		return Token('8', val);   // let '8' represent "a number"
+//	}
+//	default:
+//		error("Bad token");
+//	}
+//}
+//
+////------------------------------------------------------------------------------
+//
+//
+//Token_stream ts;        // provides get() and putback() 
+//
+//						//------------------------------------------------------------------------------
+//
+//double expression();    // declaration so that primary() can call expression()
+////double term();
+////double primary();
+//						//------------------------------------------------------------------------------
+////double factorial(double number);
+//// deal with ! (factorial)
+//double factorial(double d)
+//{
+//	int p = d;
+//	if (double(p) != d)
+//		error("factorial not defined for non-integers");
+//	if (p < 0)
+//		error("factorial not defined for negative values");
+//	else if (p > 31)
+//		error("factorial too large");
+//	else if (p == 0)
+//		return 1;
+//	else {
+//		int res = p;
+//		for (int i = p - 1; i > 0; --i)
+//			res *= i;
+//		return res;
+//	}
+//
+//}
+////------------------------------------------------------------------------------
+//
+//// deal with numbers and parentheses
+//double primary()
+//{
+//	Token t = ts.get();
+//	double d = 0;
+//	switch (t.kind)
+//	{
+//	case '(':    // handle '(' expression ')'
+//	{
+//		d = expression();
+//		t = ts.get();
+//		// if (t.kind != ')') error("')' expected); // error(3)
+//		if (t.kind != ')') error("')' expected");
+//		//return d;
+//		break;
+//	}
+//	case '{':    // handle '(' expression ')'
+//	{
+//		d = expression();
+//		t = ts.get();
+//		// if (t.kind != ')') error("')' expected); // error(3)
+//		if (t.kind != '}') error("'}' expected");
+//		//return d;
+//		break;
+//	}
+//	case '8':           // we use '8' to represent a number
+//	{
+//		//return t.value;  // return the number's value
+//		d = t.value;
+//		break;
+//	}
+//	default:
+//		error("primary expected");
+//	}
+//
+//	t = ts.get();
+//		if (t.kind != '!') {    // not a factorial: put token back, return value from above
+//			ts.putback(t);
+//			return d;
+//		}
+//		return factorial(d);   // a factorial; call factorial function
+//
+//	
+//}
+////------------------------------------------------------------------------------
+//
+//// deal with *, /, and %
+//double term()
+//{
+//	double left = primary();
+//	Token t = ts.get();        // get the next token from token stream
+//
+//	while (true) {
+//		switch (t.kind) {
+//		case '*':
+//			left *= primary();
+//			t = ts.get();
+//			// logic error(2)
+//			break;
+//		case '/':
+//		{
+//			double d = primary();
+//			if (d == 0) error("divide by zero");
+//			left /= d;
+//			t = ts.get();
+//			break;
+//		}
+//		
+//		default:
+//			ts.putback(t);     // put t back into the token stream
+//			return left;
+//		}
+//	}
+//}
+//
+////------------------------------------------------------------------------------
+//
+//// deal with + and -
+//double expression()
+//{
+//	// double left = term(;      // read and evaluate a Term // error(4)
+//	double left = term();      // read and evaluate a Term
+//	Token t = ts.get();        // get the next token from token stream
+//
+//	while (true) {
+//		switch (t.kind) {
+//		case '+':
+//			left += term();    // evaluate Term and add
+//			t = ts.get();
+//			break;
+//		case '-':
+//			// left += term();    // evaluate Term and subtract // logic error(3)
+//			left -= term();    // evaluate Term and subtract
+//			t = ts.get();
+//			break;
+//		default:
+//			ts.putback(t);     // put t back into the token stream
+//			return left;       // finally: no more + or -: return the answer
+//		}
+//	}
+//}
+//
+////------------------------------------------------------------------------------
+//
+//
+//
+//int main()
+//try
+//{
+//	double val = 0;
+//	while (cin) {
+//		
+//		Token t = ts.get();
+//
+//		if (t.kind == 'x') break; // 'q' for quit
+//		if (t.kind == '=')        // ';' for "print now"
+//			cout << "=" << val << '\n';
+//		else
+//			ts.putback(t);
+//		val = expression();
+//	}
+//	keep_window_open();
+//}
+//catch (exception& e) {
+//	cerr << "error: " << e.what() << '\n';
+//	keep_window_open();
+//	return 1;
+//}
+//catch (...) {
+//	cerr << "Oops: unknown exception!\n";
+//	keep_window_open();
+//	return 2;
+//}
 
-class Token {
-public:
-	char kind;        // what kind of token
-	double value;     // for numbers: a value 
-	Token(char ch)    // make a Token from a char
-		:kind(ch), value(0) { }
-	Token(char ch, double val)     // make a Token from a char and a double
-		:kind(ch), value(val) { }
-};
-
-
-//------------------------------------------------------------------------------
-
-class Token_stream {
-public:
-	Token_stream();   // make a Token_stream that reads from cin
-	Token get();      // get a Token (get() is defined elsewhere)
-	void putback(Token t);    // put a Token back
-private:
-	bool full;        // is there a Token in the buffer?
-	Token buffer;     // here is where we keep a Token put back using putback()
-};
-
-//------------------------------------------------------------------------------
-
-// The constructor just sets full to indicate that the buffer is empty:
-Token_stream::Token_stream()
-	:full(false), buffer(0)    // no Token in buffer
-{
-}
-
-//------------------------------------------------------------------------------
-
-// The putback() member function puts its argument back into the Token_stream's buffer:
-void Token_stream::putback(Token t)
-{
-	if (full) error("putback() into a full buffer");
-	buffer = t;       // copy t to buffer
-	full = true;      // buffer is now full
-}
-
-//------------------------------------------------------------------------------
-
-Token Token_stream::get()
-{
-	if (full) {       // do we already have a Token ready?
-					  // remove token from buffer
-		full = false;
-		return buffer;
-	}
-
-	char ch;
-	cin >> ch;    // note that >> skips whitespace (space, newline, tab, etc.)
-
-	switch (ch) {
-	case '=':    // for "print"
-	case 'x':    // for "quit"
-	case '(': case ')': case '+': case '-': case '*': case '/': case '{': case '}': case '!': 
-		return Token(ch);        // let each character represent itself
-	case '.':
-	case '0': case '1': case '2': case '3': case '4':
-		// case '5': case '6': case '7': case '9': // logic error(1)
-	case '5': case '6': case '7': case '8': case '9':
-	{
-		cin.putback(ch);         // put digit back into the input stream
-		double val;
-		cin >> val;              // read a floating-point number
-		return Token('8', val);   // let '8' represent "a number"
-	}
-	default:
-		error("Bad token");
-	}
-}
-
-//------------------------------------------------------------------------------
-
-
-Token_stream ts;        // provides get() and putback() 
-
-						//------------------------------------------------------------------------------
-
-double expression();    // declaration so that primary() can call expression()
-//double term();
-//double primary();
-						//------------------------------------------------------------------------------
-//double factorial(double number);
-// deal with ! (factorial)
-double factorial(double d)
-{
-	int p = d;
-	if (double(p) != d)
-		error("factorial not defined for non-integers");
-	if (p < 0)
-		error("factorial not defined for negative values");
-	else if (p > 31)
-		error("factorial too large");
-	else if (p == 0)
-		return 1;
-	else {
-		int res = p;
-		for (int i = p - 1; i > 0; --i)
-			res *= i;
-		return res;
-	}
-
-}
-//------------------------------------------------------------------------------
-
-// deal with numbers and parentheses
-double primary()
-{
-	Token t = ts.get();
-	double d = 0;
-	switch (t.kind)
-	{
-	case '(':    // handle '(' expression ')'
-	{
-		d = expression();
-		t = ts.get();
-		// if (t.kind != ')') error("')' expected); // error(3)
-		if (t.kind != ')') error("')' expected");
-		//return d;
-		break;
-	}
-	case '{':    // handle '(' expression ')'
-	{
-		d = expression();
-		t = ts.get();
-		// if (t.kind != ')') error("')' expected); // error(3)
-		if (t.kind != '}') error("'}' expected");
-		//return d;
-		break;
-	}
-	case '8':           // we use '8' to represent a number
-	{
-		//return t.value;  // return the number's value
-		d = t.value;
-		break;
-	}
-	default:
-		error("primary expected");
-	}
-
-	t = ts.get();
-		if (t.kind != '!') {    // not a factorial: put token back, return value from above
-			ts.putback(t);
-			return d;
-		}
-		return factorial(d);   // a factorial; call factorial function
-
-	
-}
-//------------------------------------------------------------------------------
-
-// deal with *, /, and %
-double term()
-{
-	double left = primary();
-	Token t = ts.get();        // get the next token from token stream
-
-	while (true) {
-		switch (t.kind) {
-		case '*':
-			left *= primary();
-			t = ts.get();
-			// logic error(2)
-			break;
-		case '/':
-		{
-			double d = primary();
-			if (d == 0) error("divide by zero");
-			left /= d;
-			t = ts.get();
-			break;
-		}
-		
-		default:
-			ts.putback(t);     // put t back into the token stream
-			return left;
-		}
-	}
-}
-
-//------------------------------------------------------------------------------
-
-// deal with + and -
-double expression()
-{
-	// double left = term(;      // read and evaluate a Term // error(4)
-	double left = term();      // read and evaluate a Term
-	Token t = ts.get();        // get the next token from token stream
-
-	while (true) {
-		switch (t.kind) {
-		case '+':
-			left += term();    // evaluate Term and add
-			t = ts.get();
-			break;
-		case '-':
-			// left += term();    // evaluate Term and subtract // logic error(3)
-			left -= term();    // evaluate Term and subtract
-			t = ts.get();
-			break;
-		default:
-			ts.putback(t);     // put t back into the token stream
-			return left;       // finally: no more + or -: return the answer
-		}
-	}
-}
-
-//------------------------------------------------------------------------------
-
-
-
-int main()
-try
-{
-	double val = 0;
-	while (cin) {
-		
-		Token t = ts.get();
-
-		if (t.kind == 'x') break; // 'q' for quit
-		if (t.kind == '=')        // ';' for "print now"
-			cout << "=" << val << '\n';
-		else
-			ts.putback(t);
-		val = expression();
-	}
-	keep_window_open();
-}
-catch (exception& e) {
-	cerr << "error: " << e.what() << '\n';
-	keep_window_open();
-	return 1;
-}
-catch (...) {
-	cerr << "Oops: unknown exception!\n";
-	keep_window_open();
-	return 2;
-}
 
 //------------------------------------------------------------------------------
 
@@ -546,3 +547,150 @@ catch (...) {
 //}
 //
 ////------------------------------------------------------------------------------
+
+//##########################################################################################
+//##					Rework exercise 19 in Chapter 4 - exercise 4.				###
+//##########################################################################################
+
+class Name_value
+{
+public:
+	void SetNameAndValue(string name, int score) 
+	{
+		Names = name;
+		Scores = score;
+	}
+	string ReturnName()
+	{
+		return Names;
+	}
+	int ReturnScore() 
+	{
+		return Scores;
+	}
+private:	
+	string Names;
+	int Scores;
+};
+
+Name_value NamesAndScoresType;
+
+void NameAndValuePairsRework()
+{
+	string Name = "";
+	int Score = 0;
+	int ScoreInt = 0;
+	bool bIsNameScoreUniqueError = true;
+	bool bIsNameFound = false;
+	bool bIsScoreFound = false;
+	vector<Name_value> NamesAndScoresVector;
+	int NameScoreCounter = 0;
+	int WhileCounter = 0;
+
+	// -------------------------------------------------------------------------------
+	while (Name != "NoName")
+	{
+		//RESET
+		Score = 0;
+		Name = "";
+
+		bIsNameScoreUniqueError = true;
+		std::cout << "\nEnter name: " << std::endl;
+		std::cin >> Name;
+		std::cout << "\nEnter score: " << std::endl;
+		if (Name != "NoName") { std::cin >> Score; }
+
+		if (((Name == "") || (Score == 0)) && Name != "NoName")
+		{
+			bIsNameScoreUniqueError = false;
+			std::cout << "Please provide valid input and try again!";
+			Score = 0;
+			Name = "";
+		}
+		if (Name != "NoName") {
+			for(int counter = 0; counter < NamesAndScoresVector.size(); counter++)
+			{
+				if (Name == NamesAndScoresVector[counter].ReturnName())
+				{
+					bIsNameScoreUniqueError = false;
+				}
+			}
+		}
+		if (bIsNameScoreUniqueError && Name != "NoName")
+		{
+			NamesAndScoresType.SetNameAndValue(Name, Score);
+			NamesAndScoresVector.push_back(NamesAndScoresType);
+		}
+	}
+
+	/*for (int counter = 0; counter < NamesAndScoresVector.size(); counter++)
+	{
+		std::cout << "name: " << NamesAndScoresVector[counter].ReturnName() << " scores: " << NamesAndScoresVector[counter].ReturnScore() << std::endl;
+	}*/
+
+	// -------------------------------------------------------------------------------
+	std::cout << "\nSeacrh for a name: " << std::endl;
+	std::cin >> Name;
+	while (Name != "NoName")
+	{
+		/// RESET 
+		bIsNameFound = false;
+		WhileCounter = 0;
+		while ((bIsNameFound == false) && (WhileCounter < (NamesAndScoresVector.size())))
+		{
+			if (Name == NamesAndScoresVector[WhileCounter].ReturnName())
+			{
+				bIsNameFound = true;
+				Score = WhileCounter;
+			}
+			//else { bIsNameFound = true; }
+			WhileCounter++;
+		}
+
+		if (bIsNameFound)
+		{
+			std::cout << "\nName: " << Name << " Scores: " << NamesAndScoresVector[Score].ReturnScore() << std::endl;
+		}
+		else { std::cout << "\nName not found: " << std::endl; }
+
+		std::cout << "\nSeacrh for a name: " << std::endl;
+		std::cin >> Name;
+	}
+
+	// -------------------------------------------------------------------------------
+	std::cout << "\nSeacrh for a score: " << std::endl;
+	std::cin >> ScoreInt;
+
+	while (ScoreInt != 0)
+	{
+		/// RESET 
+		bIsScoreFound = false;
+		WhileCounter = 0;
+		if (ScoreInt != 0) {
+			while (WhileCounter < NamesAndScoresVector.size())
+			{
+				if (NamesAndScoresVector[WhileCounter].ReturnScore() == ScoreInt)
+				{
+					//bIsScoreFound = true;
+					std::cout << "Name: " << NamesAndScoresVector[WhileCounter].ReturnName() << " Score: " << ScoreInt << "\t" << std::endl;
+				}
+				//else { std::cout << "\Score not found: " << std::endl; }
+				WhileCounter++;
+			}
+		}
+
+		std::cout << "\nSeacrh for a score: " << std::endl;
+		std::cin >> ScoreInt;
+	}
+}
+
+//##########################################################################################
+//##						MAIN													###
+//##########################################################################################
+int main()
+{
+
+	NameAndValuePairsRework();
+
+	return 0;
+}
