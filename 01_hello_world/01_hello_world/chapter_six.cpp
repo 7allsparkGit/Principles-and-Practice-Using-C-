@@ -551,146 +551,312 @@ Happy hunting!
 //##########################################################################################
 //##					Rework exercise 19 in Chapter 4 - exercise 4.				###
 //##########################################################################################
+//
+//class Name_value
+//{
+//public:
+//	void SetNameAndValue(string name, int score) 
+//	{
+//		Names = name;
+//		Scores = score;
+//	}
+//	string ReturnName()
+//	{
+//		return Names;
+//	}
+//	int ReturnScore() 
+//	{
+//		return Scores;
+//	}
+//private:	
+//	string Names;
+//	int Scores;
+//};
+//
+//Name_value NamesAndScoresType;
+//
+//void NameAndValuePairsRework()
+//{
+//	string Name = "";
+//	int Score = 0;
+//	int ScoreInt = 0;
+//	bool bIsNameScoreUniqueError = true;
+//	bool bIsNameFound = false;
+//	bool bIsScoreFound = false;
+//	vector<Name_value> NamesAndScoresVector;
+//	int NameScoreCounter = 0;
+//	int WhileCounter = 0;
+//
+//	// -------------------------------------------------------------------------------
+//	while (Name != "NoName")
+//	{
+//		//RESET
+//		Score = 0;
+//		Name = "";
+//
+//		bIsNameScoreUniqueError = true;
+//		std::cout << "\nEnter name: " << std::endl;
+//		std::cin >> Name;
+//		std::cout << "\nEnter score: " << std::endl;
+//		if (Name != "NoName") { std::cin >> Score; }
+//
+//		if (((Name == "") || (Score == 0)) && Name != "NoName")
+//		{
+//			bIsNameScoreUniqueError = false;
+//			std::cout << "Please provide valid input and try again!";
+//			Score = 0;
+//			Name = "";
+//		}
+//		if (Name != "NoName") {
+//			for(int counter = 0; counter < NamesAndScoresVector.size(); counter++)
+//			{
+//				if (Name == NamesAndScoresVector[counter].ReturnName())
+//				{
+//					bIsNameScoreUniqueError = false;
+//				}
+//			}
+//		}
+//		if (bIsNameScoreUniqueError && Name != "NoName")
+//		{
+//			NamesAndScoresType.SetNameAndValue(Name, Score);
+//			NamesAndScoresVector.push_back(NamesAndScoresType);
+//		}
+//	}
+//
+//	/*for (int counter = 0; counter < NamesAndScoresVector.size(); counter++)
+//	{
+//		std::cout << "name: " << NamesAndScoresVector[counter].ReturnName() << " scores: " << NamesAndScoresVector[counter].ReturnScore() << std::endl;
+//	}*/
+//
+//	// -------------------------------------------------------------------------------
+//	std::cout << "\nSeacrh for a name: " << std::endl;
+//	std::cin >> Name;
+//	while (Name != "NoName")
+//	{
+//		/// RESET 
+//		bIsNameFound = false;
+//		WhileCounter = 0;
+//		while ((bIsNameFound == false) && (WhileCounter < (NamesAndScoresVector.size())))
+//		{
+//			if (Name == NamesAndScoresVector[WhileCounter].ReturnName())
+//			{
+//				bIsNameFound = true;
+//				Score = WhileCounter;
+//			}
+//			//else { bIsNameFound = true; }
+//			WhileCounter++;
+//		}
+//
+//		if (bIsNameFound)
+//		{
+//			std::cout << "\nName: " << Name << " Scores: " << NamesAndScoresVector[Score].ReturnScore() << std::endl;
+//		}
+//		else { std::cout << "\nName not found: " << std::endl; }
+//
+//		std::cout << "\nSeacrh for a name: " << std::endl;
+//		std::cin >> Name;
+//	}
+//
+//	// -------------------------------------------------------------------------------
+//	std::cout << "\nSeacrh for a score: " << std::endl;
+//	std::cin >> ScoreInt;
+//
+//	while (ScoreInt != 0)
+//	{
+//		/// RESET 
+//		bIsScoreFound = false;
+//		WhileCounter = 0;
+//		if (ScoreInt != 0) {
+//			while (WhileCounter < NamesAndScoresVector.size())
+//			{
+//				if (NamesAndScoresVector[WhileCounter].ReturnScore() == ScoreInt)
+//				{
+//					//bIsScoreFound = true;
+//					std::cout << "Name: " << NamesAndScoresVector[WhileCounter].ReturnName() << " Score: " << ScoreInt << "\t" << std::endl;
+//				}
+//				//else { std::cout << "\Score not found: " << std::endl; }
+//				WhileCounter++;
+//			}
+//		}
+//
+//		std::cout << "\nSeacrh for a score: " << std::endl;
+//		std::cin >> ScoreInt;
+//	}
+//}
+//
+////##########################################################################################
+////##						MAIN													###
+////##########################################################################################
+//int main()
+//{
+//
+//	NameAndValuePairsRework();
+//
+//	return 0;
+//}
 
-class Name_value
+//##########################################################################################
+//##					Chapter 6 - exercise 6.				###
+//##########################################################################################+
+
+//	Sentence:
+//		subject Verb // e.g., C++ rules
+//		Sentence Conjunction Sentence // e.g., Birds fly but fish swim
+//	Subject
+//		Noun
+//		"the" Noun
+//	Conjunction :
+//		"and"
+//		"or"
+//		"but"
+//	Noun :
+//		"birds"
+//		"fish"
+//		"C++"
+//	Verb :
+//		"rules"
+//		"fly"
+//		"swim"
+
+
+//vector<string> Subject;
+vector<string> Conjunction;
+vector<string> Noun;
+vector<string> Verb;
+
+void InitializeVectors() 
 {
-public:
-	void SetNameAndValue(string name, int score) 
-	{
-		Names = name;
-		Scores = score;
-	}
-	string ReturnName()
-	{
-		return Names;
-	}
-	int ReturnScore() 
-	{
-		return Scores;
-	}
-private:	
-	string Names;
-	int Scores;
-};
+	Conjunction.push_back("and");
+	Conjunction.push_back("or");
+	Conjunction.push_back("but");
 
-Name_value NamesAndScoresType;
+	Noun.push_back("birds");
+	Noun.push_back("fish");
+	Noun.push_back("C++");
 
-void NameAndValuePairsRework()
-{
-	string Name = "";
-	int Score = 0;
-	int ScoreInt = 0;
-	bool bIsNameScoreUniqueError = true;
-	bool bIsNameFound = false;
-	bool bIsScoreFound = false;
-	vector<Name_value> NamesAndScoresVector;
-	int NameScoreCounter = 0;
-	int WhileCounter = 0;
-
-	// -------------------------------------------------------------------------------
-	while (Name != "NoName")
-	{
-		//RESET
-		Score = 0;
-		Name = "";
-
-		bIsNameScoreUniqueError = true;
-		std::cout << "\nEnter name: " << std::endl;
-		std::cin >> Name;
-		std::cout << "\nEnter score: " << std::endl;
-		if (Name != "NoName") { std::cin >> Score; }
-
-		if (((Name == "") || (Score == 0)) && Name != "NoName")
-		{
-			bIsNameScoreUniqueError = false;
-			std::cout << "Please provide valid input and try again!";
-			Score = 0;
-			Name = "";
-		}
-		if (Name != "NoName") {
-			for(int counter = 0; counter < NamesAndScoresVector.size(); counter++)
-			{
-				if (Name == NamesAndScoresVector[counter].ReturnName())
-				{
-					bIsNameScoreUniqueError = false;
-				}
-			}
-		}
-		if (bIsNameScoreUniqueError && Name != "NoName")
-		{
-			NamesAndScoresType.SetNameAndValue(Name, Score);
-			NamesAndScoresVector.push_back(NamesAndScoresType);
-		}
-	}
-
-	/*for (int counter = 0; counter < NamesAndScoresVector.size(); counter++)
-	{
-		std::cout << "name: " << NamesAndScoresVector[counter].ReturnName() << " scores: " << NamesAndScoresVector[counter].ReturnScore() << std::endl;
-	}*/
-
-	// -------------------------------------------------------------------------------
-	std::cout << "\nSeacrh for a name: " << std::endl;
-	std::cin >> Name;
-	while (Name != "NoName")
-	{
-		/// RESET 
-		bIsNameFound = false;
-		WhileCounter = 0;
-		while ((bIsNameFound == false) && (WhileCounter < (NamesAndScoresVector.size())))
-		{
-			if (Name == NamesAndScoresVector[WhileCounter].ReturnName())
-			{
-				bIsNameFound = true;
-				Score = WhileCounter;
-			}
-			//else { bIsNameFound = true; }
-			WhileCounter++;
-		}
-
-		if (bIsNameFound)
-		{
-			std::cout << "\nName: " << Name << " Scores: " << NamesAndScoresVector[Score].ReturnScore() << std::endl;
-		}
-		else { std::cout << "\nName not found: " << std::endl; }
-
-		std::cout << "\nSeacrh for a name: " << std::endl;
-		std::cin >> Name;
-	}
-
-	// -------------------------------------------------------------------------------
-	std::cout << "\nSeacrh for a score: " << std::endl;
-	std::cin >> ScoreInt;
-
-	while (ScoreInt != 0)
-	{
-		/// RESET 
-		bIsScoreFound = false;
-		WhileCounter = 0;
-		if (ScoreInt != 0) {
-			while (WhileCounter < NamesAndScoresVector.size())
-			{
-				if (NamesAndScoresVector[WhileCounter].ReturnScore() == ScoreInt)
-				{
-					//bIsScoreFound = true;
-					std::cout << "Name: " << NamesAndScoresVector[WhileCounter].ReturnName() << " Score: " << ScoreInt << "\t" << std::endl;
-				}
-				//else { std::cout << "\Score not found: " << std::endl; }
-				WhileCounter++;
-			}
-		}
-
-		std::cout << "\nSeacrh for a score: " << std::endl;
-		std::cin >> ScoreInt;
-	}
+	Verb.push_back("rules");
+	Verb.push_back("fly");
+	Verb.push_back("swim");
 }
+// check if sentence is correct
+bool CheckNoun(string checkString)
+{
+	for (string Nouns : Noun)
+	{
+		if (checkString == Nouns)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CheckSubject(string checkString)
+{	
+	if (checkString == "the")
+	{
+		string CinStreamNextWord4;
+		cin >> CinStreamNextWord4;
+		return CheckNoun(CinStreamNextWord4);
+	}
+	else { return CheckNoun(checkString); }
+}
+
+bool CheckVerb(string checkString)
+{
+	for (string Verbs : Verb)
+	{
+		if (checkString == Verbs)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CheckConjunction(string checkString)
+{
+	for (string Conjunctions : Conjunction)
+	{
+		if (checkString == Conjunctions)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CheckSentence()
+{
+	string CinStreamNextWord;
+	std::cin >> CinStreamNextWord;
+	if (!CheckSubject(CinStreamNextWord)) { return false; }
+
+	string CinStreamNextWord2;
+	std::cin >> CinStreamNextWord2;
+	if (!CheckVerb(CinStreamNextWord2)) { return false; }
+
+	string CinStreamNextWord3;
+	std::cin >> CinStreamNextWord3;
+	if (CinStreamNextWord3 == ".") { return true;	}	
+	if (!CheckConjunction(CinStreamNextWord3)) { return false; }
+	return CheckSentence();
+}
+// every sentence is terminated with full stop ( . ) surrounded by whitespace.
+	//  f.e.: birds fly but the wish swim . | is a sentence
+// for each sentence response "OK" or "not OK" 
+// do not bother with tokens; read into a string using >>
+
+
+// store initial values,  subject conju, noun  and verb in string vector
+	// in the checking functions iterate through the vector
+
+// sentence() return bool
+// check subject
+	// check  noun 
+	// or check "the" noun (recursive)
+		// check verb
+			// check cinjuction
+				// if conjuction return sentence()
+
 
 //##########################################################################################
 //##						MAIN													###
 //##########################################################################################
+// cin input stream: cin reads only the first  sequence of characters, that means after a space, tab, newline the stream ends.
+	// When you do  enter more words into input stream - hit enter - and assign it with '>>' sign to a variable, it will be filled with 
+	// one sequence of characters - like a single word. The next cin '>>' will output the next character sequence into a variable.
+	// to the same variable or another variable. So we can work with sequence of chars separatelly, on the other hand the multiple char streams
+	// can be read to for example a string variable with the getline function.int 
 int main()
+try
 {
-
-	NameAndValuePairsRework();
-
-	return 0;
+	cout << "enter a sentence of the simplified grammar (terminated by a dot):\n";
+	// initialize vectors
+	InitializeVectors();
+	
+	while (cin)
+	{
+		bool bIsSentence = CheckSentence();
+		if (bIsSentence)
+		{
+			std::cout << "OK";
+		}
+		else { std::cout << "Not OK"; }
+		std::cout << "\nNext sentence: ";
+		// loop continues, it ask for new sentence countless time, no loop break
+	}
+	keep_window_open();
 }
+catch (exception& e) {
+	cerr << "error: " << e.what() << '\n';
+	keep_window_open();
+	return 1;
+}
+catch (...) {
+	cerr << "Oops: unknown exception!\n";
+	keep_window_open();
+	return 2;
+}
+
+
