@@ -864,32 +864,171 @@ Happy hunting!
 //##					Chapter 6 - exercise 8 alpha.				###
 //##########################################################################################
 
+//int bulls = 0;
+//int cows = 0;
+//
+//// puts new numbers into solution vector
+//vector<int> get_new_solution()
+//{
+//	vector<int> solution(4);
+//	solution[0] = randint(9);
+//	solution[1] = randint(9);
+//	solution[2] = randint(9);
+//	solution[3] = randint(9);
+//	return solution;
+//}
+//
+//// turns an integer into a vector
+//vector<int> int_to_vector(int n)
+//{
+//	if (n>9999 || n<0) error("int_to_vector called with wrong number");
+//	vector<int> v(4);
+//	v[0] = n / 1000 % 10;
+//	v[1] = n / 100 % 10;
+//	v[2] = n / 10 % 10;
+//	v[3] = n % 10;
+//	return v;
+//}
+//
+//// checks guess for bulls and cows
+//// first loop for bulls, second loop for cows
+//// we do not need to store the vector becaus every time a new guess and solution vectors comes, 
+//	// we can first calculate the bulls and then sort both vectors to determine te bulls. 
+//	// after that with substracting from cows the bull we can calculate the cows and bulls
+//// the other solution is that we use a helper vector to determine the cows, and then
+//	// we can simple compare the guess and solution vector together
+//// first one uses more cpu power but does not require another copy of vector in such the second solution
+//void check_guess(vector<int> guess, vector<int> solution)
+//{
+//	
+//	cows = 0;
+//	bulls = 0;
+//	bool bIsMatchin = false;
+//	//vector<bool> VectorPositionCheck;
+//	vector<int> VectorMatchingValueCheck(4, 0);
+//	
+//	// initialize VectorMatchingValueCheck
+//	
+//	// calculate cows number 
+//	for (int i = 0; i < guess.size(); i++)
+//	{
+//		bIsMatchin = false;
+//		for (int j = 0; j < guess.size(); j++)
+//		{
+//			if (!bIsMatchin)
+//			{
+//				if (guess[i] == solution[j] && VectorMatchingValueCheck[j] != 1)
+//				{
+//					cows++;
+//					VectorMatchingValueCheck[j] = 1;
+//					bIsMatchin = true;
+//				}
+//			}
+//		}
+//	}
+//	// calculate bulls amount 
+//	for (int i = 0; i < guess.size(); i++)
+//	{
+//		if (guess[i] == solution[i])
+//		{
+//			bulls++;
+//			cows--;
+//		}		
+//	}
+//}
+//
+//int main()
+//try {
+//	int guess = 0;
+//	//int seed = 0;
+//	cout << "Guess my four digit number! Numbers with less digits will be padded with zeros.\n";
+//	//cout << "Enter seed for random numbers: ";
+//	//cin >> seed;
+//	
+//	//srand(seed);
+//	
+//	vector<int> solution = get_new_solution();
+//	cout << "Enter guess ('q' to exit): ";
+//	
+//	while (cin >> guess) {
+//		if (guess>9999 || guess<0)
+//			cout << "Number must be between 0000 and 9999!\n";
+//		else {
+//			vector<int> v_guess = int_to_vector(guess);
+//			check_guess(v_guess, solution);
+//			if (bulls == 4) {
+//				cout << "You have guessed the number! Setting new solution...\n";
+//				solution = get_new_solution();
+//			}
+//			if (bulls < 4) {
+//				cout << "Number of bulls: " << bulls << endl;
+//				cout << "Number of cows: " << cows << endl;
+//			}
+//		}
+//		cout << "Enter guess ('q' to exit): ";
+//	}
+//	cout << "You gave up!\n";
+//	return 0;
+//}
+//catch (exception& e) {
+//	cerr << "Error: " << e.what() << endl;
+//	//keep_window_open();
+//	return 1;
+//}
+//catch (...) {
+//	cerr << "Unknown exception!\n";
+//	return 2;
+//}
+
+//##########################################################################################
+//##					Chapter 6 - exercise 8 				###
+//##########################################################################################
+
+static const string ValidInput = "abcdefghijklmnopqrstuvwxyz";
 int bulls = 0;
 int cows = 0;
-
-// puts new numbers into solution vector
-vector<int> get_new_solution()
+// puts new chars into solution vector
+string get_new_solution()
 {
-	vector<int> solution(4);
-	solution[0] = randint(9);
-	solution[1] = randint(9);
-	solution[2] = randint(9);
-	solution[3] = randint(9);
-	return solution;
+	string NewSolutionString = "";
+	char ValidInputChar = ' ';
+	
+	for (int i = 0; i < 4; i++)
+	{
+		int RandInt = randint(ValidInput.size() - 1);
+		ValidInputChar = ValidInput[RandInt];
+		NewSolutionString += ValidInputChar;
+	}
+	std::cout << "\nnew solution: " << NewSolutionString << std::endl;
+	return NewSolutionString;
 }
-
-// turns an integer into a vector
-vector<int> int_to_vector(int n)
+// allow only abcdefghijklmnopqrstuvwxyz characters
+bool CheckValidity(string InputString)
 {
-	if (n>9999 || n<0) error("int_to_vector called with wrong number");
-	vector<int> v(4);
-	v[0] = n / 1000 % 10;
-	v[1] = n / 100 % 10;
-	v[2] = n / 10 % 10;
-	v[3] = n % 10;
-	return v;
-}
+	bool bIsLetterOk = false;
 
+	if (InputString.size() != 4)
+		return false;
+	else
+	{
+		for (int j = 0; j < 4; j++) 
+		{
+			bIsLetterOk = false;
+			for (char Letter : ValidInput)
+			{
+				if (InputString[j] == Letter)
+				{
+					bIsLetterOk = true;
+				}
+			}
+			if (!bIsLetterOk)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+}
 // checks guess for bulls and cows
 // first loop for bulls, second loop for cows
 // we do not need to store the vector becaus every time a new guess and solution vectors comes, 
@@ -898,17 +1037,13 @@ vector<int> int_to_vector(int n)
 // the other solution is that we use a helper vector to determine the cows, and then
 	// we can simple compare the guess and solution vector together
 // first one uses more cpu power but does not require another copy of vector in such the second solution
-void check_guess(vector<int> guess, vector<int> solution)
+void check_guess(string guess, string solution)
 {
-	
 	cows = 0;
 	bulls = 0;
 	bool bIsMatchin = false;
-	//vector<bool> VectorPositionCheck;
 	vector<int> VectorMatchingValueCheck(4, 0);
-	
-	// initialize VectorMatchingValueCheck
-	
+
 	// calculate cows number 
 	for (int i = 0; i < guess.size(); i++)
 	{
@@ -939,25 +1074,19 @@ void check_guess(vector<int> guess, vector<int> solution)
 
 int main()
 try {
-	int guess = 0;
-	//int seed = 0;
-	cout << "Guess my four digit number! Numbers with less digits will be padded with zeros.\n";
-	//cout << "Enter seed for random numbers: ";
-	//cin >> seed;
-	
-	//srand(seed);
-	
-	vector<int> solution = get_new_solution();
+	string guess = "";
+	cout << "Guess my four digit string! Tyoe exactly four digit string, otherwise you'll get an error!\n";
+	//vector<string> solution = get_new_solution();
+	string solution = get_new_solution();
 	cout << "Enter guess ('q' to exit): ";
 	
 	while (cin >> guess) {
-		if (guess>9999 || guess<0)
-			cout << "Number must be between 0000 and 9999!\n";
+		if (!CheckValidity(guess))
+			cout << "Must be 4 digit exactly from abcdefghijklmnopqrstuvwxyz letters!\n";
 		else {
-			vector<int> v_guess = int_to_vector(guess);
-			check_guess(v_guess, solution);
+			check_guess(guess, solution);
 			if (bulls == 4) {
-				cout << "You have guessed the number! Setting new solution...\n";
+				cout << "You have guessed the string! Setting new solution...\n";
 				solution = get_new_solution();
 			}
 			if (bulls < 4) {
