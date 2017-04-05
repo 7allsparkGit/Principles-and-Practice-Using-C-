@@ -983,40 +983,152 @@ Happy hunting!
 //##########################################################################################
 //##					Chapter 6 - exercise 8 				###
 //##########################################################################################
+//
+//static const string ValidInput = "abcdefghijklmnopqrstuvwxyz";
+//int bulls = 0;
+//int cows = 0;
+//// puts new chars into solution vector
+//string get_new_solution()
+//{
+//	string NewSolutionString = "";
+//	char ValidInputChar = ' ';
+//	
+//	for (int i = 0; i < 4; i++)
+//	{
+//		int RandInt = randint(ValidInput.size() - 1);
+//		ValidInputChar = ValidInput[RandInt];
+//		NewSolutionString += ValidInputChar;
+//	}
+//	std::cout << "\nnew solution: " << NewSolutionString << std::endl;
+//	return NewSolutionString;
+//}
+//// allow only abcdefghijklmnopqrstuvwxyz characters
+//bool CheckValidity(string InputString)
+//{
+//	bool bIsLetterOk = false;
+//
+//	if (InputString.size() != 4)
+//		return false;
+//	else
+//	{
+//		for (int j = 0; j < 4; j++) 
+//		{
+//			bIsLetterOk = false;
+//			for (char Letter : ValidInput)
+//			{
+//				if (InputString[j] == Letter)
+//				{
+//					bIsLetterOk = true;
+//				}
+//			}
+//			if (!bIsLetterOk)
+//			{
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+//}
+//// checks guess for bulls and cows
+//// first loop for bulls, second loop for cows
+//// we do not need to store the vector becaus every time a new guess and solution vectors comes, 
+//	// we can first calculate the bulls and then sort both vectors to determine te bulls. 
+//	// after that with substracting from cows the bull we can calculate the cows and bulls
+//// the other solution is that we use a helper vector to determine the cows, and then
+//	// we can simple compare the guess and solution vector together
+//// first one uses more cpu power but does not require another copy of vector in such the second solution
+//void check_guess(string guess, string solution)
+//{
+//	cows = 0;
+//	bulls = 0;
+//	bool bIsMatchin = false;
+//	vector<int> VectorMatchingValueCheck(4, 0);
+//
+//	// calculate cows number 
+//	for (int i = 0; i < guess.size(); i++)
+//	{
+//		bIsMatchin = false;
+//		for (int j = 0; j < guess.size(); j++)
+//		{
+//			if (!bIsMatchin)
+//			{
+//				if (guess[i] == solution[j] && VectorMatchingValueCheck[j] != 1)
+//				{
+//					cows++;
+//					VectorMatchingValueCheck[j] = 1;
+//					bIsMatchin = true;
+//				}
+//			}
+//		}
+//	}
+//	// calculate bulls amount 
+//	for (int i = 0; i < guess.size(); i++)
+//	{
+//		if (guess[i] == solution[i])
+//		{
+//			bulls++;
+//			cows--;
+//		}		
+//	}
+//}
+//
+//int main()
+//try {
+//	string guess = "";
+//	cout << "Guess my four digit string! Tyoe exactly four digit string, otherwise you'll get an error!\n";
+//	//vector<string> solution = get_new_solution();
+//	string solution = get_new_solution();
+//	cout << "Enter guess ('q' to exit): ";
+//	
+//	while (cin >> guess) {
+//		if (!CheckValidity(guess))
+//			cout << "Must be 4 digit exactly from abcdefghijklmnopqrstuvwxyz letters!\n";
+//		else {
+//			check_guess(guess, solution);
+//			if (bulls == 4) {
+//				cout << "You have guessed the string! Setting new solution...\n";
+//				solution = get_new_solution();
+//			}
+//			if (bulls < 4) {
+//				cout << "Number of bulls: " << bulls << endl;
+//				cout << "Number of cows: " << cows << endl;
+//			}
+//		}
+//		cout << "Enter guess ('q' to exit): ";
+//	}
+//	cout << "You gave up!\n";
+//	return 0;
+//}
+//catch (exception& e) {
+//	cerr << "Error: " << e.what() << endl;
+//	//keep_window_open();
+//	return 1;
+//}
+//catch (...) {
+//	cerr << "Unknown exception!\n";
+//	return 2;
+//}
 
-static const string ValidInput = "abcdefghijklmnopqrstuvwxyz";
-int bulls = 0;
-int cows = 0;
-// puts new chars into solution vector
-string get_new_solution()
-{
-	string NewSolutionString = "";
-	char ValidInputChar = ' ';
-	
-	for (int i = 0; i < 4; i++)
-	{
-		int RandInt = randint(ValidInput.size() - 1);
-		ValidInputChar = ValidInput[RandInt];
-		NewSolutionString += ValidInputChar;
-	}
-	std::cout << "\nnew solution: " << NewSolutionString << std::endl;
-	return NewSolutionString;
-}
-// allow only abcdefghijklmnopqrstuvwxyz characters
-bool CheckValidity(string InputString)
+//##########################################################################################
+//##					Chapter 6 - exercise 9 				###
+//##########################################################################################
+static const string ValidInput = "0123456789";
+
+bool CheckValidity(string IsValidString)
 {
 	bool bIsLetterOk = false;
-
-	if (InputString.size() != 4)
+	if (IsValidString.size() > 4 || IsValidString.size() < 0)
+	{
 		return false;
+	}
 	else
 	{
-		for (int j = 0; j < 4; j++) 
+		for (int j = 0; j < IsValidString.size(); j++)
 		{
 			bIsLetterOk = false;
 			for (char Letter : ValidInput)
 			{
-				if (InputString[j] == Letter)
+				if (IsValidString[j] == Letter)
 				{
 					bIsLetterOk = true;
 				}
@@ -1029,76 +1141,44 @@ bool CheckValidity(string InputString)
 		return true;
 	}
 }
-// checks guess for bulls and cows
-// first loop for bulls, second loop for cows
-// we do not need to store the vector becaus every time a new guess and solution vectors comes, 
-	// we can first calculate the bulls and then sort both vectors to determine te bulls. 
-	// after that with substracting from cows the bull we can calculate the cows and bulls
-// the other solution is that we use a helper vector to determine the cows, and then
-	// we can simple compare the guess and solution vector together
-// first one uses more cpu power but does not require another copy of vector in such the second solution
-void check_guess(string guess, string solution)
-{
-	cows = 0;
-	bulls = 0;
-	bool bIsMatchin = false;
-	vector<int> VectorMatchingValueCheck(4, 0);
-
-	// calculate cows number 
-	for (int i = 0; i < guess.size(); i++)
-	{
-		bIsMatchin = false;
-		for (int j = 0; j < guess.size(); j++)
-		{
-			if (!bIsMatchin)
-			{
-				if (guess[i] == solution[j] && VectorMatchingValueCheck[j] != 1)
-				{
-					cows++;
-					VectorMatchingValueCheck[j] = 1;
-					bIsMatchin = true;
-				}
-			}
-		}
-	}
-	// calculate bulls amount 
-	for (int i = 0; i < guess.size(); i++)
-	{
-		if (guess[i] == solution[i])
-		{
-			bulls++;
-			cows--;
-		}		
-	}
-}
-
+// MAIN loop of the program
 int main()
 try {
-	string guess = "";
-	cout << "Guess my four digit string! Tyoe exactly four digit string, otherwise you'll get an error!\n";
-	//vector<string> solution = get_new_solution();
-	string solution = get_new_solution();
-	cout << "Enter guess ('q' to exit): ";
-	
-	while (cin >> guess) {
-		if (!CheckValidity(guess))
-			cout << "Must be 4 digit exactly from abcdefghijklmnopqrstuvwxyz letters!\n";
-		else {
-			check_guess(guess, solution);
-			if (bulls == 4) {
-				cout << "You have guessed the string! Setting new solution...\n";
-				solution = get_new_solution();
-			}
-			if (bulls < 4) {
-				cout << "Number of bulls: " << bulls << endl;
-				cout << "Number of cows: " << cows << endl;
-			}
+	string InputString = "";
+	bool bIsInputGood = false;
+	bool bPlayMore = true;
+	while (bPlayMore)
+	{		
+		// check if the input is valid
+		while (!bIsInputGood)
+		{
+			std::cout << "Please enter a valid input, max 4 digits and numbers from 1-9!\t";
+			std::cin >> InputString;
+			bIsInputGood = CheckValidity(InputString);
 		}
-		cout << "Enter guess ('q' to exit): ";
+
+		// print out integers and their corresponding sufix: thousend, hundred, tens, one
+		for (int i = 0; i < InputString.size(); i--)
+		{
+
+		}
+
+		char probaChar = InputString[0];
+		std::cout << probaChar << std::endl;
+		int probaInt = probaChar - '0';
+		std::cout << probaInt << std::endl;
+	
+		char PlayMoreChar = ' ';
+		std::cout << "To stop playing press 'q' or anything else to play more: ";
+		std::cin >> PlayMoreChar;
+		if (PlayMoreChar == 'q')
+		{
+			bPlayMore = false;
+		}
 	}
-	cout << "You gave up!\n";
 	return 0;
 }
+
 catch (exception& e) {
 	cerr << "Error: " << e.what() << endl;
 	//keep_window_open();
