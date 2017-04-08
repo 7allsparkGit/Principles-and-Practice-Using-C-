@@ -1113,7 +1113,18 @@ Happy hunting!
 //##					Chapter 6 - exercise 9 				###
 //##########################################################################################
 static const string ValidInput = "0123456789";
+vector<int> VectorInput(4, 10);
+vector<string> VectorDigit = { "thousand", "hundred", "ten", "one" };
+string InputString = "";
 
+// initialize vector for new play
+void VectorInitialize()
+{
+	for (int i = 0; i < VectorInput.size();i++)
+	{
+		VectorInput[i] = 10;
+	}
+}
 bool CheckValidity(string IsValidString)
 {
 	bool bIsLetterOk = false;
@@ -1141,14 +1152,60 @@ bool CheckValidity(string IsValidString)
 		return true;
 	}
 }
+
+// convert string vector to int vector
+void VectorInputPopulate()
+{
+	for (int j = 0; j < InputString.size(); j++)
+	{
+		VectorInput[j] = InputString[j] - '0';
+	}
+}
+
+void PrintOutSolution()
+{
+	int Helper = 0;
+	std::cout << InputString << " is ";
+	// check integer vector for first 10
+	for (int j = 0; j < InputString.size(); j++)
+	{
+		if (InputString[j] == 10)
+		{
+			Helper++;
+		}
+	}
+	// print the actual solution
+	int i = 0;
+	while (i < 4)
+	{
+		// put a 'ss' line ten(s)
+		if (VectorInput[i] != 10) {
+			if (VectorInput[i] > 1)
+			{
+				std::cout << VectorInput[i] << " " << VectorDigit[i + Helper] << "s" << " ";
+			}
+			else
+			{
+				std::cout << VectorInput[i] << " " << VectorDigit[i + Helper] << " ";
+			}
+		}
+		i++;
+	}
+}
 // MAIN loop of the program
 int main()
 try {
-	string InputString = "";
+	
 	bool bIsInputGood = false;
 	bool bPlayMore = true;
+	
 	while (bPlayMore)
-	{		
+	{	
+		// reinitialize VectorInput and InputString and bIsInputGood if replay 
+		VectorInitialize();
+		InputString = "";
+		bIsInputGood = false;
+		
 		// check if the input is valid
 		while (!bIsInputGood)
 		{
@@ -1156,25 +1213,20 @@ try {
 			std::cin >> InputString;
 			bIsInputGood = CheckValidity(InputString);
 		}
-
+		// Convert string vector to int vector
+		VectorInputPopulate();
 		// print out integers and their corresponding sufix: thousend, hundred, tens, one
-		for (int i = 0; i < InputString.size(); i--)
-		{
+			// loop trough the whole vector, it is the easiest method for now
+		PrintOutSolution();
 
-		}
-
-		char probaChar = InputString[0];
-		std::cout << probaChar << std::endl;
-		int probaInt = probaChar - '0';
-		std::cout << probaInt << std::endl;
-	
 		char PlayMoreChar = ' ';
-		std::cout << "To stop playing press 'q' or anything else to play more: ";
+		std::cout << "\n\nTo stop playing press 'q' or anything else to play more(one character only: ";
 		std::cin >> PlayMoreChar;
 		if (PlayMoreChar == 'q')
 		{
 			bPlayMore = false;
 		}
+		std::cout << std::endl;
 	}
 	return 0;
 }
