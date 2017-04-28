@@ -105,25 +105,89 @@
 //##					Chapter 8 - exercise 5.							###
 //#########################################################################
 
-vector<int> ReverseNewtVector(vector<int> v, int n)
+//vector<int> ReverseNewtVector(vector<int> v, int n)
+//{
+//	vector<int> ReversedVector ( n );
+//	for (int i = 0; i < n; i++)
+//	{
+//		ReversedVector[(n-1)-i] = v[i];
+//	}
+//	return ReversedVector;
+//}
+//
+//void ReverseSameVector(vector<int> &v)
+//{
+//	for (int i = 0; i <= v.size()/2; i++)
+//	{
+//		swap(v[(v.size()-1)-i],v[i]);
+//	}
+//}
+//
+//void Print(const string &ArgStrn, const vector<int> &ArgIntVector)
+//{
+//	std::cout << ArgStrn;
+//	for (int i = 0; i < ArgIntVector.size(); i++)
+//	{
+//		std::cout << ArgIntVector[i];
+//		std::cout << ' ';
+//	}
+//}
+//
+//int main()
+//{
+//	try
+//	{
+//		string StringReverse = "Reversed vector: ";
+//		vector<int> IntVector = { 2,3,4,5,6 };
+//		int numberOfElements = 5;
+//				vector<int>ReversedVector = ReverseNewtVector(IntVector, numberOfElements);
+//		std::cout << '\n';
+//		
+//		Print(StringReverse, ReversedVector);
+//		std::cout << '\n';
+//		ReverseSameVector(IntVector);
+//		Print(StringReverse, IntVector);
+//		std::cout << '\n';
+//
+//		
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
+
+//#########################################################################
+//##					Chapter 8 - exercise 6.							###
+//#########################################################################
+
+vector<string> ReverseNewVector(vector<string> v, int n)
 {
-	vector<int> ReversedVector ( n );
+	vector<string> ReversedVector(n);
 	for (int i = 0; i < n; i++)
 	{
-		ReversedVector[(n-1)-i] = v[i];
+		ReversedVector[(n - 1) - i] = v[i];
 	}
 	return ReversedVector;
 }
 
-void ReverseSameVector(vector<int> &v)
+void ReverseSameVector(vector<string> &v)
 {
-	for (int i = 0; i <= v.size()/2; i++)
+	for (int i = 0; i <= v.size() / 2; i++)
 	{
-		swap(v[(v.size()-1)-i],v[i]);
+		swap(v[(v.size() - 1) - i], v[i]);
 	}
 }
 
-void Print(const string &ArgStrn, const vector<int> &ArgIntVector)
+void Print(const string &ArgStrn, const vector<string> &ArgIntVector)
 {
 	std::cout << ArgStrn;
 	for (int i = 0; i < ArgIntVector.size(); i++)
@@ -138,18 +202,18 @@ int main()
 	try
 	{
 		string StringReverse = "Reversed vector: ";
-		vector<int> IntVector = { 2,3,4,5,6 };
+		vector<string> StringVector = {"two","three","four","five","six" };
 		int numberOfElements = 5;
-				vector<int>ReversedVector = ReverseNewtVector(IntVector, numberOfElements);
-		std::cout << '\n';
-		
-		Print(StringReverse, ReversedVector);
-		std::cout << '\n';
-		ReverseSameVector(IntVector);
-		Print(StringReverse, IntVector);
+		vector<string>ReversedVector = ReverseNewVector(StringVector, numberOfElements);
 		std::cout << '\n';
 
-		
+		Print(StringReverse, ReversedVector);
+		std::cout << '\n';
+		ReverseSameVector(StringVector);
+		Print(StringReverse, StringVector);
+		std::cout << '\n';
+
+
 	}
 	catch (exception& e) {
 		cerr << "exception: " << e.what() << endl;
