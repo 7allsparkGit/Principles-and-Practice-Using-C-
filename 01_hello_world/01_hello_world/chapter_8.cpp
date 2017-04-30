@@ -169,51 +169,123 @@
 //##					Chapter 8 - exercise 6.							###
 //#########################################################################
 
-vector<string> ReverseNewVector(vector<string> v, int n)
-{
-	vector<string> ReversedVector(n);
-	for (int i = 0; i < n; i++)
-	{
-		ReversedVector[(n - 1) - i] = v[i];
-	}
-	return ReversedVector;
-}
+//vector<string> ReverseNewVector(vector<string> v, int n)
+//{
+//	vector<string> ReversedVector(n);
+//	for (int i = 0; i < n; i++)
+//	{
+//		ReversedVector[(n - 1) - i] = v[i];
+//	}
+//	return ReversedVector;
+//}
+//
+//void ReverseSameVector(vector<string> &v)
+//{
+//	for (int i = 0; i <= v.size() / 2; i++)
+//	{
+//		swap(v[(v.size() - 1) - i], v[i]);
+//	}
+//}
+//
+//void Print(const string &ArgStrn, const vector<string> &ArgIntVector)
+//{
+//	std::cout << ArgStrn;
+//	for (int i = 0; i < ArgIntVector.size(); i++)
+//	{
+//		std::cout << ArgIntVector[i];
+//		std::cout << ' ';
+//	}
+//}
+//
+//int main()
+//{
+//	try
+//	{
+//		string StringReverse = "Reversed vector: ";
+//		vector<string> StringVector = {"two","three","four","five","six" };
+//		int numberOfElements = 5;
+//		vector<string>ReversedVector = ReverseNewVector(StringVector, numberOfElements);
+//		std::cout << '\n';
+//
+//		Print(StringReverse, ReversedVector);
+//		std::cout << '\n';
+//		ReverseSameVector(StringVector);
+//		Print(StringReverse, StringVector);
+//		std::cout << '\n';
+//
+//
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
 
-void ReverseSameVector(vector<string> &v)
+//#########################################################################
+//##					Chapter 8 - exercise 7.							###
+//#########################################################################
+
+vector<double> CreateIntVector(vector<string> &Names, int SizeOfNamesVector)
 {
-	for (int i = 0; i <= v.size() / 2; i++)
+	vector<double> DoubleVector(SizeOfNamesVector);
+	for (int i = 0; i < SizeOfNamesVector; i++)
 	{
-		swap(v[(v.size() - 1) - i], v[i]);
+		double pushBackdouble;
+		std::cout << "Enter " << i+1 << ". number, for " << Names[i];
+		std::cout << std::endl;
+		std::cin >> pushBackdouble;
+		DoubleVector[i] = pushBackdouble;
+	}
+	return DoubleVector;
+}
+void Prints(string Label, const vector<double> &Doubles, const vector<string> &Names)
+{
+	for (int i = 0; i < Doubles.size(); i++)
+	{
+		std::cout << Names[i] << " " << Doubles[i] << "\n";
 	}
 }
-
-void Print(const string &ArgStrn, const vector<string> &ArgIntVector)
+void SortingtVectors(vector<double> &Doubles, vector<string> &Names)
 {
-	std::cout << ArgStrn;
-	for (int i = 0; i < ArgIntVector.size(); i++)
+	vector<string> NamesVectorHelper = Names; // make a copy from vector Names
+	vector<double> DoublesVectorHelper = Doubles; // make a copy from vector Doubles
+	sort(Names.begin(), Names.end());
+
+	// sorting int vector
+	for (int i = 0; i < Names.size(); i++)
 	{
-		std::cout << ArgIntVector[i];
-		std::cout << ' ';
+		for (int j = 0; j < Names.size(); j++)
+		{
+			if (Names[i] == NamesVectorHelper[j])
+			{
+				Doubles[i] = DoublesVectorHelper[j];
+			}
+		}
 	}
 }
-
+void SortingAndPrintingVectors()
+{
+	string Labels = "Sorting some vectors!";
+	vector<string> NamesVector = { "Elsworth","Jacquelynn","Keila","Chance","Koeppel" }; // gonna be sorted
+	vector<double> DoubleVector = CreateIntVector(NamesVector, NamesVector.size());	 	 // gonna be sorted
+	
+	SortingtVectors(DoubleVector, NamesVector);
+	Prints(Labels, DoubleVector, NamesVector);
+}
 int main()
 {
 	try
 	{
-		string StringReverse = "Reversed vector: ";
-		vector<string> StringVector = {"two","three","four","five","six" };
-		int numberOfElements = 5;
-		vector<string>ReversedVector = ReverseNewVector(StringVector, numberOfElements);
+		SortingAndPrintingVectors();
 		std::cout << '\n';
-
-		Print(StringReverse, ReversedVector);
-		std::cout << '\n';
-		ReverseSameVector(StringVector);
-		Print(StringReverse, StringVector);
-		std::cout << '\n';
-
-
 	}
 	catch (exception& e) {
 		cerr << "exception: " << e.what() << endl;
