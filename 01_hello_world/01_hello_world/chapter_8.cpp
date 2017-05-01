@@ -233,58 +233,96 @@
 //##					Chapter 8 - exercise 7.							###
 //#########################################################################
 
-vector<double> CreateIntVector(vector<string> &Names, int SizeOfNamesVector)
-{
-	vector<double> DoubleVector(SizeOfNamesVector);
-	for (int i = 0; i < SizeOfNamesVector; i++)
-	{
-		double pushBackdouble;
-		std::cout << "Enter " << i+1 << ". number, for " << Names[i];
-		std::cout << std::endl;
-		std::cin >> pushBackdouble;
-		DoubleVector[i] = pushBackdouble;
-	}
-	return DoubleVector;
-}
-void Prints(string Label, const vector<double> &Doubles, const vector<string> &Names)
-{
-	for (int i = 0; i < Doubles.size(); i++)
-	{
-		std::cout << Names[i] << " " << Doubles[i] << "\n";
-	}
-}
-void SortingtVectors(vector<double> &Doubles, vector<string> &Names)
-{
-	vector<string> NamesVectorHelper = Names; // make a copy from vector Names
-	vector<double> DoublesVectorHelper = Doubles; // make a copy from vector Doubles
-	sort(Names.begin(), Names.end());
+//vector<double> CreateIntVector(vector<string> &Names, int SizeOfNamesVector)
+//{
+//	vector<double> DoubleVector(SizeOfNamesVector);
+//	for (int i = 0; i < SizeOfNamesVector; i++)
+//	{
+//		double pushBackdouble;
+//		std::cout << "Enter " << i+1 << ". number, for " << Names[i];
+//		std::cout << std::endl;
+//		std::cin >> pushBackdouble;
+//		DoubleVector[i] = pushBackdouble;
+//	}
+//	return DoubleVector;
+//}
+//void Prints(string Label, const vector<double> &Doubles, const vector<string> &Names)
+//{
+//	for (int i = 0; i < Doubles.size(); i++)
+//	{
+//		std::cout << Names[i] << " " << Doubles[i] << "\n";
+//	}
+//}
+//void SortingtVectors(vector<double> &Doubles, vector<string> &Names)
+//{
+//	vector<string> NamesVectorHelper = Names; // make a copy from vector Names
+//	vector<double> DoublesVectorHelper = Doubles; // make a copy from vector Doubles
+//	sort(Names.begin(), Names.end());
+//
+//	// sorting int vector
+//	for (int i = 0; i < Names.size(); i++)
+//	{
+//		for (int j = 0; j < Names.size(); j++)
+//		{
+//			if (Names[i] == NamesVectorHelper[j])
+//			{
+//				Doubles[i] = DoublesVectorHelper[j];
+//			}
+//		}
+//	}
+//}
+//void SortingAndPrintingVectors()
+//{
+//	string Labels = "Sorting some vectors!";
+//	vector<string> NamesVector = { "Elsworth","Jacquelynn","Keila","Chance","Koeppel" }; // gonna be sorted
+//	vector<double> DoubleVector = CreateIntVector(NamesVector, NamesVector.size());	 	 // gonna be sorted
+//	
+//	SortingtVectors(DoubleVector, NamesVector);
+//	Prints(Labels, DoubleVector, NamesVector);
+//}
+//int main()
+//{
+//	try
+//	{
+//		SortingAndPrintingVectors();
+//		std::cout << '\n';
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
 
-	// sorting int vector
-	for (int i = 0; i < Names.size(); i++)
+//#########################################################################
+//##					Chapter 8 - exercise 10.					###
+//#########################################################################
+
+double maxv( vector<double> &findLargestFromThisVector )
+{
+	double largestElement = 0;
+	for (int i = 0; i < findLargestFromThisVector.size(); i++)
 	{
-		for (int j = 0; j < Names.size(); j++)
+		if (findLargestFromThisVector[i] > largestElement)
 		{
-			if (Names[i] == NamesVectorHelper[j])
-			{
-				Doubles[i] = DoublesVectorHelper[j];
-			}
+			largestElement = findLargestFromThisVector[i];
 		}
 	}
-}
-void SortingAndPrintingVectors()
-{
-	string Labels = "Sorting some vectors!";
-	vector<string> NamesVector = { "Elsworth","Jacquelynn","Keila","Chance","Koeppel" }; // gonna be sorted
-	vector<double> DoubleVector = CreateIntVector(NamesVector, NamesVector.size());	 	 // gonna be sorted
-	
-	SortingtVectors(DoubleVector, NamesVector);
-	Prints(Labels, DoubleVector, NamesVector);
+	return largestElement;
 }
 int main()
 {
 	try
 	{
-		SortingAndPrintingVectors();
+		vector<double> findLargestElement = { 40,5,43,71,100,43,2,4345 };
+		std::cout << maxv(findLargestElement);
 		std::cout << '\n';
 	}
 	catch (exception& e) {
