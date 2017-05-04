@@ -343,89 +343,138 @@
 //##					Chapter 8 - exercise 11.					###
 //#########################################################################
 
-struct result {
-	result();
-	double min;
-	double max;
-	double mean;
-	double median;
-};
+//struct result {
+//	result();
+//	double min;
+//	double max;
+//	double mean;
+//	double median;
+//};
+//
+//result::result()
+//	:min(0), max(0), mean(0), median(0) { }
+//
+//double maxv(vector<double> &findElement)
+//{
+//	double element = 0;
+//	for (int i = 0; i < findElement.size(); i++)
+//	{
+//		if (findElement[i] > element)
+//		{
+//			element = findElement[i];
+//		}
+//	}
+//	return element;
+//}
+//
+//double minv(vector<double> &findElement)
+//{
+//	double element = findElement[0];
+//	for (int i = 1; i < findElement.size(); i++)
+//	{
+//		if (findElement[i] < element)
+//		{
+//			element = findElement[i];
+//		}
+//	}
+//	return element;
+//}
+//
+//double medianv(vector<double> &findElement)
+//{
+//	vector<double> medianVector = findElement;
+//	std::sort(medianVector.begin(), medianVector.end());
+//	
+//	return medianVector[medianVector.size() / 2];
+//}
+//
+//double meanv(vector<double> &findElement)
+//{
+//	double element = 0;
+//	double i = 0;
+//	while (i < findElement.size())
+//	{
+//		element += findElement[i];
+//		i++;
+//	}
+//	std::cout << "element: " << element;
+//	std::cout << "i: " << i;
+//	element /= i;
+//	return element;
+//}
+//
+//result GetVectorProperties( vector<double> & v)
+//{
+//	result vResult;
+//	vResult.max = maxv(v);
+//	vResult.mean = meanv(v);
+//	vResult.median = medianv(v);
+//	vResult.min = minv(v);
+//	return vResult;
+//}
+//
+//int main()
+//{
+//	try{
+//	
+//		//result resultv;
+//		vector<double> resultv = { 40,5,43,71,100,43,2,4345 };
+//		result getVec =  GetVectorProperties(resultv);
+//		//std::cout << GetVectorProperties(vectorV);
+//		std::cout << '\n';
+//		std::cout << "min " << getVec.min << std::endl;
+//		std::cout << "max " << getVec.max << std::endl;
+//		std::cout << "mean " << getVec.mean << std::endl;
+//		std::cout << "median " << getVec.median << std::endl;
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
 
-result::result()
-	:min(0), max(0), mean(0), median(0) { }
+//#########################################################################
+//##					Chapter 8 - exercise 12.					###
+//#########################################################################
 
-double maxv(vector<double> &findElement)
+
+void print_until_s(const vector<string>& v,const  string quit)
 {
-	double element = 0;
-	for (int i = 0; i < findElement.size(); i++)
-	{
-		if (findElement[i] > element)
-		{
-			element = findElement[i];
-		}
+	for (string s : v) {
+		if (s == quit) return;
+		std::cout << s << '\n';
 	}
-	return element;
 }
 
-double minv(vector<double> &findElement)
+void print_until_ss(const vector<string>& v, const  string& quit)
 {
-	double element = findElement[0];
-	for (int i = 1; i < findElement.size(); i++)
+	int counter = 0;
+	int loop = 0;
+	while(loop < v.size())
 	{
-		if (findElement[i] < element)
-		{
-			element = findElement[i];
-		}
+		if (v[loop] == quit)
+			if (counter == 1) return;
+			else counter++;
+		std::cout << v[loop] << '\n';
+		loop++;
 	}
-	return element;
-}
-
-double medianv(vector<double> &findElement)
-{
-	vector<double> medianVector = findElement;
-	std::sort(medianVector.begin(), medianVector.end());
-	
-	return medianVector[medianVector.size() / 2];
-}
-
-double meanv(vector<double> &findElement)
-{
-	double element = 0;
-	double i = 0;
-	while (i < findElement.size())
-	{
-		element += findElement[i];
-		i++;
-	}
-	std::cout << "element: " << element;
-	std::cout << "i: " << i;
-	element /= i;
-	return element;
-}
-
-result GetVectorProperties( vector<double> & v)
-{
-	result vResult;
-	vResult.max = maxv(v);
-	vResult.mean = meanv(v);
-	vResult.median = medianv(v);
-	vResult.min = minv(v);
-	return vResult;
 }
 
 int main()
 {
 	try{
-	
-		//result resultv;
-		vector<double> resultv = { 40,5,43,71,100,43,2,4345 };
-		result getVec =  GetVectorProperties(resultv);
-		//std::cout << GetVectorProperties(vectorV);
+		vector<string> strings = { "quit", "two" , "quit", "three", "four", "one" };
+		print_until_ss(strings, "quit");
 		std::cout << '\n';
-		std::cout << "min " << getVec.min << std::endl;
-		std::cout << "max " << getVec.max << std::endl;
-		std::cout << "mean " << getVec.mean << std::endl;
-		std::cout << "median " << getVec.median << std::endl;
+
 	}
 	catch (exception& e) {
 		cerr << "exception: " << e.what() << endl;
@@ -440,7 +489,3 @@ int main()
 		return 2;
 	}
 }
-
-//#########################################################################
-//##					Chapter 8 - exercise 12.					###
-//#########################################################################
