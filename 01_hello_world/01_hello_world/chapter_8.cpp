@@ -445,36 +445,112 @@
 //##					Chapter 8 - exercise 12.					###
 //#########################################################################
 
+//void print_until_s(const vector<string>& v,const  string quit)
+//{
+//	for (string s : v) {
+//		if (s == quit) return;
+//		std::cout << s << '\n';
+//	}
+//}
+//
+//void print_until_ss(const vector<string>& v, const  string& quit)
+//{
+//	int counter = 0;
+//	int loop = 0;
+//	while(loop < v.size())
+//	{
+//		if (v[loop] == quit)
+//			if (counter == 1) return;
+//			else counter++;
+//		std::cout << v[loop] << '\n';
+//		loop++;
+//	}
+//}
+//
+//int main()
+//{
+//	try{
+//		vector<string> strings = { "quit", "two" , "quit", "three", "four", "one" };
+//		print_until_ss(strings, "quit");
+//		std::cout << '\n';
+//
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
 
-void print_until_s(const vector<string>& v,const  string quit)
+//#########################################################################
+//##					Chapter 8 - exercise 13.					###
+//#########################################################################
+string longestString(const vector<string>& strings)
 {
-	for (string s : v) {
-		if (s == quit) return;
-		std::cout << s << '\n';
-	}
-}
-
-void print_until_ss(const vector<string>& v, const  string& quit)
-{
-	int counter = 0;
-	int loop = 0;
-	while(loop < v.size())
+	int longestIndex = -1;
+	int biggestWord = 0;
+	for (int i = 0; i < strings.size(); i++)
 	{
-		if (v[loop] == quit)
-			if (counter == 1) return;
-			else counter++;
-		std::cout << v[loop] << '\n';
-		loop++;
+		if (strings[i].size() > biggestWord)
+		{
+			biggestWord = strings[i].size();
+			longestIndex = i;
+		}
 	}
+	return strings[longestIndex];
 }
-
+string shortestString(const vector<string>& strings)
+{
+	int shortestIndex = -1;
+	int smallestWord = 0;
+	for (int i = 0; i < strings.size(); i++)
+	{
+		if (strings[i].size() > smallestWord)
+		{
+			smallestWord = strings[i].size();
+			shortestIndex = i;
+		}
+	}
+	return strings[shortestIndex];
+}
+string firstString(const vector<string>& strings)
+{
+	vector<string> shortedVector = strings;
+	std::sort(shortedVector.begin(), shortedVector.end());
+	string firstString = shortedVector[0];
+	return firstString;
+}
+string lastString(const vector<string>& strings)
+{
+	vector<string> shortedVector = strings;
+	std::sort(shortedVector.begin(), shortedVector.end());
+	string lastString = shortedVector[shortedVector.size()-1];
+	return lastString;
+}
+void mainString(const vector<string>& strings)
+{ 
+	//call prints
+	std::cout << "longest string is " << longestString(strings);
+	std::cout << '\n';
+	std::cout << "shortest string is " << shortestString(strings);
+	std::cout << '\n';
+	std::cout << "last string is " << lastString(strings);
+	std::cout << '\n';
+	std::cout << "first string is " << firstString(strings);
+	std::cout << '\n';
+}
 int main()
 {
-	try{
-		vector<string> strings = { "quit", "two" , "quit", "three", "four", "one" };
-		print_until_ss(strings, "quit");
-		std::cout << '\n';
-
+	try {
+		vector<string> strings = { "quit", "tw" , "quits", "three", "fourfo", "onesssss" };
+		mainString(strings);
 	}
 	catch (exception& e) {
 		cerr << "exception: " << e.what() << endl;
