@@ -135,19 +135,74 @@
 //#########################################################################
 //##					Chapter 9 - drill 	§9.4.3			###
 //#########################################################################
+//class Date {
+//private:
+//	int y, m, d; 
+//public:
+//	Date(int y, int m, int d);
+//	void add_day(Date& dd, int n);
+//	int month() { return m; }
+//	int day() { return d; }
+//	int year() { return y; }
+//
+//};
+//Date::Date(int yy, int mm, int dd)
+//{
+//	y = yy;
+//	m = mm;
+//	d = dd;
+//}
+//void Date::add_day(Date& dat, int d)
+//{
+//	dat.d += d;
+//}
+//ostream& const operator<<(ostream& os, Date& d)
+//{
+//	return os << '(' << d.year()
+//		<< ',' << d.month()
+//		<< ',' << d.day() << ')';
+//}
+//int main()
+//{
+//	try {
+//		Date today{ 1987 ,  2 ,  25 };
+//		Date tomorrow = today;
+//		tomorrow.add_day(tomorrow, 1);
+//		std::cout << tomorrow;
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
 
-// simple Date (too simple?)
+//#########################################################################
+//##					Chapter 9 - drill 	§9.7.1			###
+//#########################################################################
+
+enum class Month {
+	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
+};
+
 
 class Date {
 private:
-	int y, m, d; 
+	int y, d;
+	int m;
 public:
 	Date(int y, int m, int d);
 	void add_day(Date& dd, int n);
 	int month() { return m; }
 	int day() { return d; }
 	int year() { return y; }
-
 };
 Date::Date(int yy, int mm, int dd)
 {
@@ -158,12 +213,11 @@ Date::Date(int yy, int mm, int dd)
 void Date::add_day(Date& dat, int d)
 {
 	dat.d += d;
+	if (d > 31) error("add_day() results in invalid date");
 }
-ostream& const operator<<(ostream& os, Date& d)
+ostream& operator<<(ostream& os, Date& d)
 {
-	return os << '(' << d.year()
-		<< ',' << d.month()
-		<< ',' << d.day() << ')';
+	return os << '(' << d.year() << ',' << d.month() << ',' << d.day() << ')';
 }
 int main()
 {
@@ -186,4 +240,3 @@ int main()
 		return 2;
 	}
 }
-
