@@ -87,12 +87,67 @@
 
 // simple Date (too simple?)
 
-struct Date {
-	int y; // year
-	int m; // month in year
-	int d; // day of month
+//struct Date {
+//	int y; // year
+//	int m; // month in year
+//	int d; // day of month
+//	Date(int y, int m, int d);
+//	void add_day(Date& dd, int n);
+//};
+//Date::Date(int yy, int mm, int dd)
+//{
+//	y = yy;
+//	m = mm;
+//	d = dd;
+//}
+//void Date::add_day(Date& dat, int d)
+//{
+//	dat.d += d;
+//}
+//ostream& operator<<(ostream& os, const Date& d)
+//{
+//	return os << '(' << d.y
+//		<< ',' << d.m
+//		<< ',' << d.d << ')';
+//}
+//int main()
+//{
+//	try {
+//		Date today{ 1987 ,  2 ,  25 };
+//		Date tomorrow = today;
+//		tomorrow.add_day(tomorrow, 1);
+//		std::cout << tomorrow;
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
+
+//#########################################################################
+//##					Chapter 9 - drill 	§9.4.3			###
+//#########################################################################
+
+// simple Date (too simple?)
+
+class Date {
+private:
+	int y, m, d; 
+public:
 	Date(int y, int m, int d);
 	void add_day(Date& dd, int n);
+	int month() { return m; }
+	int day() { return d; }
+	int year() { return y; }
+
 };
 Date::Date(int yy, int mm, int dd)
 {
@@ -104,11 +159,11 @@ void Date::add_day(Date& dat, int d)
 {
 	dat.d += d;
 }
-ostream& operator<<(ostream& os, const Date& d)
+ostream& const operator<<(ostream& os, Date& d)
 {
-	return os << '(' << d.y
-		<< ',' << d.m
-		<< ',' << d.d << ')';
+	return os << '(' << d.year()
+		<< ',' << d.month()
+		<< ',' << d.day() << ')';
 }
 int main()
 {
@@ -131,3 +186,4 @@ int main()
 		return 2;
 	}
 }
+
