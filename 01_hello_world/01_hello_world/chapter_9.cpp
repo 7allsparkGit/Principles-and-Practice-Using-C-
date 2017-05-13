@@ -244,84 +244,170 @@
 //#########################################################################
 //##					Chapter 9 - drill 	§9.7.4			###
 //#########################################################################
-enum Month {
-	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
-};
-class Date {
+//enum Month {
+//	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
+//};
+//class Date {
+//public:
+//	Date(); // default constructor
+//	Date(int y, Month m, int d); // check for valid date before default const
+//	// no const, can change the object
+//	void add_day(Date& dd, int n);
+//	void month_add(Date& mm, int n);
+//	void year_add(Date& yy, int n);
+//	// const class/struct member function can not modify the object 
+//	Month month() const;
+//	int day() const;
+//	int year() const;
+//private:
+//	int y;
+//	int d;
+//	Month m;
+//};
+//
+//// check for valid date before default const
+//Date::Date(int y, Month m, int d)
+//	:y(y), m(m), d(d)
+//{
+//	if (m < Month::jan || m > Month::dec || d < 1 || d > 31) error("invalid date");
+//}
+//
+//const Date& default_date()
+//{
+//	static Date dd(2001, Month::jan, 1);
+//	return dd;
+//}
+//Date::Date()
+//	:y{ default_date().year() }, m{ default_date().month() }, d{ default_date().day() }
+//{
+//}
+//
+//// return methods 
+// Month Date::month() const
+//{
+//	return m;
+//}
+//int Date::day() const
+//{
+//	return d;
+//}
+//int Date::year() const
+//{
+//	return y;
+//}
+//// add methods
+//void Date::month_add(Date& mm, int n)
+//{
+//	// probably too complicated to implement yet
+//}
+//void Date::year_add(Date& yy, int n)
+//{
+//	yy.y += n;
+//}
+//void Date::add_day(Date& dat, int d)
+//{
+//	dat.d += d;
+//	if (d > 31) error("add_day() results in invalid date");
+//}
+//ostream& operator<<(ostream& os, const Date& d)
+//{
+//	return os << '(' << d.year()
+//		<< ',' << d.month()
+//		<< ',' << d.day() << ')';
+//}
+//int main()
+//{
+//	try {
+//		Date today{ 1987 ,  Month::jan ,  25 };
+//		Date tomorrow = today;
+//		tomorrow.add_day(tomorrow, 1);
+//		std::cout << tomorrow;
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
+
+//#########################################################################
+//##					Chapter 9 - exercise  	2			###
+//#########################################################################
+
+class NamePair {
 public:
-	Date(); // default constructor
-	Date(int y, Month m, int d); // check for valid date before default const
-	// no const, can change the object
-	void add_day(Date& dd, int n);
-	void month_add(Date& mm, int n);
-	void year_add(Date& yy, int n);
-	// const class/struct member function can not modify the object 
-	Month month() const;
-	int day() const;
-	int year() const;
+	//NamePair(); 
+	void ReadNames();
+	void ReadAges();
+
+	const vector<string>& getName() const { return names; };
+	const vector<double>& getAge() const { return ages; }; 
+	void print() const;
+	//void sort();
 private:
-	int y;
-	int d;
-	Month m;
+	vector<string> names;
+	vector<double> ages;
 };
-
-// check for valid date before default const
-Date::Date(int y, Month m, int d)
-	:y(y), m(m), d(d)
+// reads series of names
+void NamePair::ReadNames()
 {
-	if (m < Month::jan || m > Month::dec || d < 1 || d > 31) error("invalid date");
+	string s = "";
+	while (cin >> s && s != "No")
+	{
+		for (int i=0; i < names.size(); i++)
+		{
+			if (names[i] == s) { error("Name is already exist: " , s); }
+			names.push_back(s);
+		}
+		
+	}std::cout << " size " << names.size();
+}
+// prompt user to enter age for each name
+void NamePair::ReadAges()
+{
+	std::cout << " size " <<  names.size();
+	//ages = vector<double>();
+	for (int i = 0; i < getName().size(); i++)
+	{
+		std::cout << "Age of " << names[i] << ": ";
+		double a;
+		std::cin >> a;
+		ages.push_back(a);
+	}
+}
+// prints (name[i],age[i]) pairs
+void NamePair::print() const
+{
+	if (names.size() != ages.size())
+		error("print(): name and age must be the same size");
+	for (int i = 0; i < names.size(); ++i) {
+		cout << '(' << names[i] << ',' << ages[i] << ')' << endl;
+	}
 }
 
-const Date& default_date()
+ostream& operator<<(ostream& os, const NamePair& np)
 {
-	static Date dd(2001, Month::jan, 1);
-	return dd;
-}
-Date::Date()
-	:y{ default_date().year() }, m{ default_date().month() }, d{ default_date().day() }
-{
+	for (int i = 0; i < np.getName().size(); i++)
+	{
+		os << '(' << np.getName()[i] << ',' << np.getAge()[i] << ')' << endl;
+	}
+	return os;
 }
 
-// return methods 
- Month Date::month() const
-{
-	return m;
-}
-int Date::day() const
-{
-	return d;
-}
-int Date::year() const
-{
-	return y;
-}
-// add methods
-void Date::month_add(Date& mm, int n)
-{
-	// probably too complicated to implement yet
-}
-void Date::year_add(Date& yy, int n)
-{
-	yy.y += n;
-}
-void Date::add_day(Date& dat, int d)
-{
-	dat.d += d;
-	if (d > 31) error("add_day() results in invalid date");
-}
-ostream& operator<<(ostream& os, const Date& d)
-{
-	return os << '(' << d.year()
-		<< ',' << d.month()
-		<< ',' << d.day() << ')';
-}
 int main()
 {
 	try {
-		Date today{ 1987 ,  Month::jan ,  25 };
-		Date tomorrow = today;
-		tomorrow.add_day(tomorrow, 1);
-		std::cout << tomorrow;
+		NamePair np1;
+		np1.ReadNames();
+		np1.ReadAges();
+		std::cout << "np1:\n" << np1;
 	}
 	catch (exception& e) {
 		cerr << "exception: " << e.what() << endl;
