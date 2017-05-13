@@ -188,41 +188,137 @@
 //##					Chapter 9 - drill 	§9.7.1			###
 //#########################################################################
 
-enum class Month {
+//enum class Month {
+//	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
+//};
+//
+//
+//class Date {
+//private:
+//	int y, d;
+//	int m;
+//public:
+//	Date(int y, int m, int d);
+//	void add_day(Date& dd, int n);
+//	int month() { return m; }
+//	int day() { return d; }
+//	int year() { return y; }
+//};
+//Date::Date(int yy, int mm, int dd)
+//{
+//	y = yy;
+//	m = mm;
+//	d = dd;
+//}
+//void Date::add_day(Date& dat, int d)
+//{
+//	dat.d += d;
+//	if (d > 31) error("add_day() results in invalid date");
+//}
+//ostream& operator<<(ostream& os, Date& d)
+//{
+//	return os << '(' << d.year() << ',' << d.month() << ',' << d.day() << ')';
+//}
+//int main()
+//{
+//	try {
+//		Date today{ 1987 ,  2 ,  25 };
+//		Date tomorrow = today;
+//		tomorrow.add_day(tomorrow, 1);
+//		std::cout << tomorrow;
+//	}
+//	catch (exception& e) {
+//		cerr << "exception: " << e.what() << endl;
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 1;
+//	}
+//	catch (...) {
+//		cerr << "exception\n";
+//		char c;
+//		while (cin >> c && c != ';');
+//		return 2;
+//	}
+//}
+
+//#########################################################################
+//##					Chapter 9 - drill 	§9.7.4			###
+//#########################################################################
+enum Month {
 	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
 };
-
-
 class Date {
-private:
-	int y, d;
-	int m;
 public:
-	Date(int y, int m, int d);
+	Date(); // default constructor
+	Date(int y, Month m, int d); // check for valid date before default const
+	// no const, can change the object
 	void add_day(Date& dd, int n);
-	int month() { return m; }
-	int day() { return d; }
-	int year() { return y; }
+	void month_add(Date& mm, int n);
+	void year_add(Date& yy, int n);
+	// const class/struct member function can not modify the object 
+	Month month() const;
+	int day() const;
+	int year() const;
+private:
+	int y;
+	int d;
+	Month m;
 };
-Date::Date(int yy, int mm, int dd)
+
+// check for valid date before default const
+Date::Date(int y, Month m, int d)
+	:y(y), m(m), d(d)
 {
-	y = yy;
-	m = mm;
-	d = dd;
+	if (m < Month::jan || m > Month::dec || d < 1 || d > 31) error("invalid date");
+}
+
+const Date& default_date()
+{
+	static Date dd(2001, Month::jan, 1);
+	return dd;
+}
+Date::Date()
+	:y{ default_date().year() }, m{ default_date().month() }, d{ default_date().day() }
+{
+}
+
+// return methods 
+ Month Date::month() const
+{
+	return m;
+}
+int Date::day() const
+{
+	return d;
+}
+int Date::year() const
+{
+	return y;
+}
+// add methods
+void Date::month_add(Date& mm, int n)
+{
+	// probably too complicated to implement yet
+}
+void Date::year_add(Date& yy, int n)
+{
+	yy.y += n;
 }
 void Date::add_day(Date& dat, int d)
 {
 	dat.d += d;
 	if (d > 31) error("add_day() results in invalid date");
 }
-ostream& operator<<(ostream& os, Date& d)
+ostream& operator<<(ostream& os, const Date& d)
 {
-	return os << '(' << d.year() << ',' << d.month() << ',' << d.day() << ')';
+	return os << '(' << d.year()
+		<< ',' << d.month()
+		<< ',' << d.day() << ')';
 }
 int main()
 {
 	try {
-		Date today{ 1987 ,  2 ,  25 };
+		Date today{ 1987 ,  Month::jan ,  25 };
 		Date tomorrow = today;
 		tomorrow.add_day(tomorrow, 1);
 		std::cout << tomorrow;
