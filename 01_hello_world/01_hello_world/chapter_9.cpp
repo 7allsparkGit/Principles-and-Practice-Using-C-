@@ -350,7 +350,7 @@ public:
 	const vector<string>& getName() const { return names; }
 	const vector<double>& getAge() const { return ages; }
 	void print() const;
-	//void sort();
+	void sort();
 private:
 	vector<string> names;
 	vector<double> ages;
@@ -371,7 +371,6 @@ void NamePair::ReadNames()
 // prompt user to enter age for each name
 void NamePair::ReadAges()
 {
-	std::cout << " size " << names.size();
 	for (int i = 0; i < getName().size(); i++)
 	{
 		std::cout << "Age of " << names[i] << ": ";
@@ -380,6 +379,27 @@ void NamePair::ReadAges()
 		ages.push_back(a);
 	}
 }
+
+void NamePair::sort()
+{
+	if (names.size() != ages.size()) 
+		error("sort(): name and age must be the same size");
+
+	vector<string>presort = names;
+	Vector<double>age_cp = ages;
+	std::sort(names.begin(), names.end());
+	for (int i = 0; i < names.size(); ++i)
+	{
+		for (int j = 0; j < presort.size(); ++j)
+		{
+			if (names[i] == presort[j])
+			{
+				ages[i] = age_cp[j];
+			}
+		}	
+	}
+}
+
 // prints (name[i],age[i]) pairs
 void NamePair::print() const
 {
@@ -392,6 +412,8 @@ void NamePair::print() const
 
 ostream& operator<<(ostream& os, const NamePair& np)
 {
+	if (np.getName().size() != np.getAge().size())
+		error("<<: name and age must be the same size");
 	for (int i = 0; i < np.getName().size(); i++)
 	{
 		os << '(' << np.getName()[i] << ',' << np.getAge()[i] << ')' << endl;
@@ -399,13 +421,16 @@ ostream& operator<<(ostream& os, const NamePair& np)
 	return os;
 }
 
+
 int main()
 {
 	try {
 		NamePair np1;
 		np1.ReadNames();
 		np1.ReadAges();
+		np1.sort();
 		std::cout << "np1:\n" << np1;
+		
 	}
 	catch (exception& e) {
 		cerr << "exception: " << e.what() << endl;
