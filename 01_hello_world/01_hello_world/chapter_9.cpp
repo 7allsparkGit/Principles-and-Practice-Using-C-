@@ -347,8 +347,8 @@ public:
 	void ReadNames();
 	void ReadAges();
 
-	const vector<string>& getName() const { return names; };
-	const vector<double>& getAge() const { return ages; }; 
+	const vector<string>& getName() const { return names; }
+	const vector<double>& getAge() const { return ages; }
 	void print() const;
 	//void sort();
 private:
@@ -364,16 +364,14 @@ void NamePair::ReadNames()
 		for (int i=0; i < names.size(); i++)
 		{
 			if (names[i] == s) { error("Name is already exist: " , s); }
-			names.push_back(s);
 		}
-		
-	}std::cout << " size " << names.size();
+		names.push_back(s);
+	}
 }
 // prompt user to enter age for each name
 void NamePair::ReadAges()
 {
-	std::cout << " size " <<  names.size();
-	//ages = vector<double>();
+	std::cout << " size " << names.size();
 	for (int i = 0; i < getName().size(); i++)
 	{
 		std::cout << "Age of " << names[i] << ": ";
