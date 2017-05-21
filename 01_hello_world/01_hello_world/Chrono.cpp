@@ -11,7 +11,7 @@ namespace Chrono
 
 	const Date& default_date()
 	{
-		static Date dd{ 2001, Month::jan, 1 };
+		static Date dd{ 2001, Date::Month::jan, 1 };
 		return dd;
 	}
 	// default constructor 
@@ -41,19 +41,19 @@ namespace Chrono
 		}
 		y += n;
 	}
-	bool const isValidDate(int y, Month m, int d)
+	bool const isValidDate(int y, Date::Month m, int d)
 	{
 		if (d <= 0) return false;
-		if (m < Month::jan || Month::dec < m) return false;
+		if (m < Date::Month::jan || Date::Month::dec < m) return false;
 
 		int days_of_month = 31;
 
 		switch (m)
 		{
-		case Month::feb:
+		case Date::Month::feb:
 			days_of_month = isLeapYear(y) ? 29 : 28;
 			break;
-		case Month::apr: case Month::jun: case Month::sep: case Month::nov:
+		case Date::Month::apr: case Date::Month::jun: case Date::Month::sep: case Date::Month::nov:
 			days_of_month = 30;
 		}
 		if (days_of_month > d) return false;
@@ -103,10 +103,86 @@ namespace Chrono
 			is.clear(ios_base::failbit); // set the fail bit
 			return is;
 		}
-		dd = Date(y, Month(m), d); // update dd
+		dd = Date(y, Date::Month(m), d); // update dd
 		return is;
 	}
-	enum class Day {
-		sunday, monday, tuesday, wednesday, thursday, friday, saturday
-	};
+
+	const Date first_date = Date(1700, Date::Month::jan, 1);
+	const Day first_day = thursday;
+
+	Day DayOfWeak(const Date& d)
+	{
+		if (d.year() < first_date.year()) error("day_of_week: works only for 1970 and later");
+		int days = NumberOfDaysSinceFirstDay(d);
+		return Day((first_day + days) % 7);
+	}
+	int NumberOfDaysOfLeapYears(const Date& d)
+	{
+		int days = 0;
+		for (int i = 1970; i < d.year(); i++)
+		{
+			if (isLeapYear(i))
+			{
+				++days;
+			}
+		}
+		return days;
+	}
+	int NumberOfDaysInEveryMOnth(Date::Month m)
+	{
+		switch (m)
+		{
+		case Chrono::Date::jan: return 0;
+			break;
+		case Chrono::Date::feb: return 31;
+			break;
+		case Chrono::Date::mar: return 31 + 28;
+			break;
+		case Chrono::Date::apr: return 31 + 28 + 31;
+			break;
+		case Chrono::Date::may: return 31 + 28 + 31 + 30;
+			break;
+		case Chrono::Date::jun: return 31 + 28 + 31 + 30 + 31;
+			break;
+		case Chrono::Date::jul: return 31 + 28 + 31 + 30 + 31 + 30;
+			break;
+		case Chrono::Date::aug: return 31 + 28 + 31 + 30 + 31 + 30 + 31;
+			break;			
+		case Chrono::Date::sep: return 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31;
+			break;
+		case Chrono::Date::oct: return 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30;
+			break;
+		case Chrono::Date::nov: return 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31; 
+			break;
+		case Chrono::Date::dec: return 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
+			break;
+		default:
+			break;
+		}(m);
+	}
+	int DaysInYear(const Date& d)
+	{
+		int numberOfDay = 0;
+		// count days of year 
+		numberOfDay += NumberOfDaysInEveryMOnth(d.month());
+		// check leap year if date has passed February
+		if (d.month() > Date::feb && isLeapYear(d.year())) { ++numberOfDay; }
+		return numberOfDay;
+	}
+	long int NumberOfDaysSinceFirstDay(const Date& d)
+	{
+		if (d.year() < first_date.year()) error("days_linear: year must be 1970 or later");
+		int years = d.year() - first_date.year();
+		return years * 365 + NumberOfDaysOfLeapYears(d.year()) + DaysInYear(d) - 1;
+	}
+	Date next_Sunday(const Date& d)
+	{
+		// ...
+	}
+	Date next_weekday(const Date& d)
+	{
+		// . . .
+	}
+
+
 }  /// Chrono
