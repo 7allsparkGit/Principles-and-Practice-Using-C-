@@ -177,12 +177,31 @@ namespace Chrono
 	}
 	Date next_Sunday(const Date& d)
 	{
-		// ...
+		Date nextDate = d;
+		Day Day = DayOfWeak(d);
+		nextDate.add_day(7 - Day);
+		return d;
 	}
 	Date next_weekday(const Date& d)
 	{
-		// . . .
+		Date nextWeekDate = d;
+		Day Day = DayOfWeak(d);
+		switch (Day)
+		{
+		case sunday:
+		case monday:
+		case tuesday:
+		case wednesday:
+		case thursday:
+			nextWeekDate.add_day(1);
+			break;
+		case saturday:
+			nextWeekDate.add_day(2);
+		case friday:
+			nextWeekDate.add_day(3);
+			break;
+		}
+		return d;
 	}
-
-
+	
 }  /// Chrono
