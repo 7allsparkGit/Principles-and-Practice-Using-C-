@@ -42,10 +42,12 @@ public:
 	string GetIsbn() const { return isbn; }
 	bool GetChecked() const { return checked; }
 
-	// function check book in 
-	// function check book out 
-
-	
+	// modifying methods 
+	// function check book out
+	void checkOut();
+	// function check book in
+	void checkIn();
+		 
 private:
 	string title;
 	string author;
