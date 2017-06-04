@@ -1,6 +1,9 @@
 #include "Book.h"
 #include  <ctype.h>
 
+///////////////////////////////////////////////////////////////////////////
+//				BOOK
+///////////////////////////////////////////////////////////////////////////
 Book::Book( string title, string author, int copy_date, string isbn, Genre gen , bool checked)
 	:title(title), author(author), copy_date(copy_date),
 	isbn(isbn), genre(gen) ,checked(checked)
@@ -136,4 +139,25 @@ ostream& operator<< (ostream& os, const Book& book)
 		<< "\nGenre: " << book.GetGenreFromEnum()
 		<< "\nChecked or not: " << book.GetChecked << "\n";
 	return os;
+}
+
+///////////////////////////////////////////////////////////////////////////
+//				PATRON
+///////////////////////////////////////////////////////////////////////////
+Patron::Patron(string UserName, int CardNumber, double LibraryFee)
+	:UserName(UserName), CardNumber(CardNumber), LibraryFee(LibraryFee)
+{
+	// error checking could be goes here
+}
+Patron::Patron()
+	: UserName(PatronDefaultConst().GetUserName()),
+	CardNumber(PatronDefaultConst().GetCardNumber()),
+	LibraryFee(PatronDefaultConst().GetLibraryFee())
+{
+}
+// return a Patron object so that we can reach members of Petron class
+const Patron& PatronDefaultConst()
+{
+	static const Patron patronConst("", 0, 0);
+	return patronConst;
 }
