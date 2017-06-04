@@ -1,9 +1,9 @@
 #include "Book.h"
 #include  <ctype.h>
 
-Book::Book( string title, string author, int copy_date, string isbn, bool checked)
+Book::Book( string title, string author, int copy_date, string isbn, Genre gen , bool checked)
 	:title(title), author(author), copy_date(copy_date),
-	isbn(isbn), checked(checked)
+	isbn(isbn), genre(gen) ,checked(checked)
 {
 	// validate isbn
 	if (!IsIsbnValid(isbn)) { error("Not a valid ISBN number"); }
@@ -13,7 +13,7 @@ Book::Book( string title, string author, int copy_date, string isbn, bool checke
 	/// Book default object 
 const Book& defaultBook()
 {
-	static const Book bookStatic("", "", 0, "0-0-0-0-n",false);
+	static const Book bookStatic("", "", 0, "0-0-0-0-n", Book::fiction ,false);
 	return bookStatic;
 }
 	/// default constructor with default object supplied
@@ -22,10 +22,37 @@ Book::Book()
 	author(defaultBook().GetAuthor()),
 	copy_date(defaultBook().GetCopyDate()),
 	isbn(defaultBook().GetIsbn()),
+	genre(defaultBook().GetGenre()),
 	checked(defaultBook().GetChecked())
 {
 }
-
+///////////////////////////////////////////////////////////////////////////
+// Get functions
+///////////////////////////////////////////////////////////////////////////
+string Book::GetGenreFromEnum() const
+{ 
+	
+	switch (GetGenre()) 
+	{
+	case biography:
+		return "Biography";
+		break;
+	case  children:
+		return "Children";
+		break;
+	case periodical :
+		return "Periodical";
+		break;
+	case nonfiction:
+		return "Nonfiction";
+		break;
+	case fiction:
+		return "Fiction";
+		break;
+	default: 
+		error("No suitable enum found");
+	}
+}
 ///////////////////////////////////////////////////////////////////////////
 // Checked in-out functions 
 ///////////////////////////////////////////////////////////////////////////
@@ -106,6 +133,7 @@ ostream& operator<< (ostream& os, const Book& book)
 		<< "\nAuthor: " << book.GetAuthor()
 		<< "\nCopy Date: " << book.GetCopyDate()
 		<< "\nISBN number: " << book.GetIsbn()
-		<< "\nChecked or not: " << book.GetChecked() << "\n";
+		<< "\nGenre: " << book.GetGenreFromEnum()
+		<< "\nChecked or not: " << book.GetChecked << "\n";
 	return os;
 }
