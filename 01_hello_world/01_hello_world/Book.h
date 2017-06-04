@@ -27,13 +27,8 @@ public:
 	bool IsLetter(const char& letter);
 
 	// member properties
-		// ISBN, title, author, copyright date
-		// checked or not
-		// store ISBN  as  a string	
+		// checked or not	
 
-	// member functions
-		// get ISBN, title, author, copyright date
-		//	check in and out 
 
 	// non-modifying methods
 	string GetTitle() const{ return title; }
@@ -57,4 +52,6 @@ private:
 }; // Book.h
    
 // operator overloads
+bool operator==(const Book& b1, const Book& b2);
+bool operator!=(const Book& b1, const Book& b2);
 ostream& operator<<(ostream& os, const Book& book);

@@ -87,6 +87,19 @@ bool Book::IsIsbnValid(const string& isbn)
 ///////////////////////////////////////////////////////////////////////////
 //  operator overloading members
 ///////////////////////////////////////////////////////////////////////////
+bool operator==(const Book& b1, const Book& b2)
+{
+	if (b1.GetIsbn() == b2.GetIsbn())
+	{
+		return true;
+	}
+	else return false;
+	// return b1.GetIsbn() == b2.GetIsbn();
+}	
+bool operator!=(const Book& b1, const Book& b2)
+{
+	return !(b1.GetIsbn() == b2.GetIsbn());
+}
 ostream& operator<< (ostream& os, const Book& book)
 {
 	os << "Title: " << book.GetTitle()
